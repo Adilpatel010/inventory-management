@@ -23,7 +23,7 @@ const ListWarehouse = () => {
     const handleSearch = async (e) => {
         const value = e.target.value;
         setSearch(value);
-        
+
         if (value.trim() === "") {
             listData();
             return;
@@ -85,7 +85,8 @@ const ListWarehouse = () => {
             <div className="container-fluid font" style={{ backgroundColor: 'rgba(228, 239, 250, 0.916)' }}>
                 <div className="row justify-content-center">
                     <div className="col-lg-11">
-                        <nav className="navbar sticky-top navbar-expand-lg navbar-light" style={{ backgroundColor: 'rgba(228, 239, 250, 0.916)', height: "80px" }}>
+                        <nav className="navbar sticky-top navbar-expand-lg navbar-light d-flex align-items-center justify-content-between" style={{ backgroundColor: 'rgba(228, 239, 250, 0.916)', height: "80px" }}>
+
                             <h3 className='mt-2'>Warehouse List</h3>
                             <form className="d-flex" role="search" id="warehouse-search">
                                 <input
@@ -101,44 +102,44 @@ const ListWarehouse = () => {
                             </form>
                             <NavLink to="/warehouse/add"><button className='btn-warehouse'>+ Add Warehouse</button></NavLink>
                         </nav>
-                          <div className='col-lg-12' style={{ overflowX: "auto" }}>
-                        <table className="table table-bordered">
-                            <thead className='table-secondary' style={{ width: '150px', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>
-                                <tr>
-                                    <th>Organization ID</th>
-                                    <th>Location </th>
-                                    <th>Title</th>
-                                    <th>Description</th>
-                                    <th>Type </th>
-                                    <th>Status</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {
-                                    data.map((elm) => {
-                                        return (
-                                            <tr key={elm.wareHouseId}>
-                                                <td>{elm.organizationId}</td>
-                                                <td>{elm.locationOrArea}</td>
-                                                <td>{elm.title}</td>
-                                                <td>{elm.description}</td>
-                                                <td>{elm.type}</td>
-                                                <td>
-                                                    <div className="form-check form-switch">
-                                                        <input onChange={() => changeStatus(elm.wareHouseId, elm.status)} className="form-check-input" checked={elm.status == "ACTIVE"} type="checkbox" role="switch" />
-                                                    </div>
-                                                </td>
-                                                <td className='tab'>
-                                                    <i onClick={() => (handleUpdate(elm.wareHouseId))} className="fa-solid fa-pen-to-square updel-icon"></i>
-                                                    <i onClick={() => handleDelete(elm.wareHouseId)} className="text-danger fa-solid fa-trash updel-icons"></i>
-                                                </td>
-                                            </tr>
-                                        );
-                                    })
-                                }
-                            </tbody>
-                        </table>
+                        <div className='col-lg-12' style={{ overflowX: "auto" }}>
+                            <table className="table table-bordered">
+                                <thead className='table-secondary' style={{ width: '150px', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>
+                                    <tr>
+                                        <th>Organization ID</th>
+                                        <th>Location </th>
+                                        <th>Title</th>
+                                        <th>Description</th>
+                                        <th>Type </th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {
+                                        data.map((elm) => {
+                                            return (
+                                                <tr key={elm.wareHouseId}>
+                                                    <td>{elm.organizationId}</td>
+                                                    <td>{elm.locationOrArea}</td>
+                                                    <td>{elm.title}</td>
+                                                    <td>{elm.description}</td>
+                                                    <td>{elm.type}</td>
+                                                    <td>
+                                                        <div className="form-check form-switch">
+                                                            <input onChange={() => changeStatus(elm.wareHouseId, elm.status)} className="form-check-input" checked={elm.status == "ACTIVE"} type="checkbox" role="switch" />
+                                                        </div>
+                                                    </td>
+                                                    <td className='tab'>
+                                                        <i onClick={() => (handleUpdate(elm.wareHouseId))} className="fa-solid fa-pen-to-square updel-icon"></i>
+                                                        <i onClick={() => handleDelete(elm.wareHouseId)} className="text-danger fa-solid fa-trash updel-icons"></i>
+                                                    </td>
+                                                </tr>
+                                            );
+                                        })
+                                    }
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>

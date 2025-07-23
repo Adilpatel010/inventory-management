@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { NavLink } from 'react-router'
 import { useState } from 'react';
 
@@ -31,18 +31,15 @@ const Sidebar = () => {
 
     return (
         <div>
-            <div className="container-fluid" id='sidemain'>
+            <div className="container-fluid">
                 <div className="row">
                     <div className="col-lg-2" id='sidebar'>
                         <div className='menu'>
-                            <div className='sidebar-content'>
-                                <i className="fa-solid fa-bars"></i>
-                            </div>
                             <ul>
                                 <NavLink to="/dashboard">
                                     <li><TbLayoutGrid className='sidebar-icon' />Dashboard</li></NavLink>
                                 <NavLink to="">
-                                    <li className='ware-btn' onClick={toggleWare}>
+                                    <li onClick={toggleWare}>
                                         <LuWarehouse className='sidebar-icon' />Warehouse
                                         <span className={`fa-solid ${isWareOpen ? 'fa-angle-up' : 'fa-angle-down'}`}></span>
                                     </li></NavLink>
@@ -60,7 +57,8 @@ const Sidebar = () => {
                                 </ul>
 
                                 <NavLink to="/s">
-                                    <li onClick={toggleSupplier}><LuUsers className='sidebar-icon' />Supplier
+                                    <li onClick={toggleSupplier}>
+                                        <LuUsers className='sidebar-icon' />Supplier
                                         <span className={`fa-solid ${isSupplierOpen ? 'fa-angle-up' : 'fa-angle-down'}`}></span>
                                     </li>
                                 </NavLink>

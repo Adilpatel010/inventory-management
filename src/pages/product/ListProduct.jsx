@@ -75,7 +75,7 @@ const ListProduct = () => {
             <div className="container-fluid font" style={{ backgroundColor: 'rgba(228, 239, 250, 0.916)' }}>
                 <div className="row justify-content-center">
                     <div className="col-lg-11">
-                        <nav className="navbar sticky-top navbar-expand-lg navbar-light" style={{ backgroundColor: 'rgba(228, 239, 250, 0.916)', height: "80px" }}>
+                        <nav className="navbar sticky-top navbar-expand-lg navbar-light d-flex align-items-center justify-content-between" style={{ backgroundColor: 'rgba(228, 239, 250, 0.916)', height: "80px" }}>
                             <h3 className='mt-2'>Product List</h3>
                             <form className="d-flex" role="search" id="product-search">
                                 <input

@@ -19,33 +19,51 @@ import ListCategory from './pages/category/ListCategory'
 import AddCategory from './pages/category/Addcategory'
 import AddProduct from './pages/product/AddProduct'
 import ListProduct from './pages/product/ListProduct'
+import { createContext, useEffect, useState } from 'react'
+
+const MyContext = createContext();
 
 function App() {
 
+  const [isToggleSidebar, setIsToggleSidebar] = useState(false)
+
+  const values = {
+    isToggleSidebar, setIsToggleSidebar
+  }
+
+  // useEffect(() => {
+  //   alert(isToggleSidebar)
+  // }, [isToggleSidebar])
+
   return (
     <>
-      <Header />
-      <div className='d-flex'>
-        <Sidebar />
-        <div style={{ height: "90vh", overflowY: "scroll", width: "100%" }}>
-          <Routes>
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/warehouse/add" element={<AddWarehouse />} />
-            <Route path='/warehouse/list' element={<ListWarehouse />} />
-            <Route path='/supplier/add' element={<AddSupplier />} />
-            <Route path='/supplier/list' element={<ListSupplier />} />
-            <Route path='/purchase/add' element={<AddPurchase />} />
-            <Route path='/purchase/list' element={<ListPurchase />} />
-            <Route path='/category/add' element={<AddCategory />} />
-            <Route path='/category/list' element={<ListCategory />} />
-            <Route path='/product/add' element={<AddProduct />} />
-            <Route path='/product/list' element={<ListProduct />} />
-
-          </Routes>
+      <MyContext.Provider value={values}>
+        <Header />
+        <div className='d-flex'>
+          <div className={`sidebar-wrapper ${isToggleSidebar === true ? 'toggle' : ''}`}>
+            <Sidebar />
+          </div>
+          <div style={{ height: "90vh", overflowY: "scroll" }}
+            className={`content ${isToggleSidebar === true ? 'toggle' : ''}`}>
+            <Routes>
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/warehouse/add" element={<AddWarehouse />} />
+              <Route path='/warehouse/list' element={<ListWarehouse />} />
+              <Route path='/supplier/add' element={<AddSupplier />} />
+              <Route path='/supplier/list' element={<ListSupplier />} />
+              <Route path='/purchase/add' element={<AddPurchase />} />
+              <Route path='/purchase/list' element={<ListPurchase />} />
+              <Route path='/category/add' element={<AddCategory />} />
+              <Route path='/category/list' element={<ListCategory />} />
+              <Route path='/product/add' element={<AddProduct />} />
+              <Route path='/product/list' element={<ListProduct />} />
+            </Routes>
+          </div>
         </div>
-      </div>
+      </MyContext.Provider>
     </>
   )
 }
 
 export default App
+export { MyContext }
