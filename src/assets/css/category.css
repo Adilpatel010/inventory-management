@@ -1,0 +1,68 @@
+/* ============>> Add warehouse css <<=============== */
+#form {
+    box-shadow: 2px 2px 20px 10px rgb(241, 241, 241);
+}
+
+.btn-form {
+    color: white;
+    background-color: rgba(9, 122, 242, 0.916);
+    border: 0;
+    border-radius: 5px;
+    padding: 5px 10px;
+}
+
+.btn-form:hover {
+    color: white;
+    background-color: rgba(1, 100, 207, 0.943);
+    border: 0;
+    border-radius: 5px;
+    padding: 5px 10px;
+}
+
+/* ============>> List warehouse css <<=============== */
+.tab {
+    width: 11%;
+}
+
+.updel-icon {
+    padding: 8px;
+    color: rgba(9, 122, 242, 0.916);
+    background-color: rgba(215, 234, 254, 0.916);
+    border-radius: 50px;
+    margin: 0 6px;
+}
+
+.updel-icons {
+    padding: 8px;
+    background-color: rgba(253, 222, 222, 0.916);
+    border-radius: 50px;
+    margin: 0 6px;
+}
+
+#category-search {
+    margin-left: 17%;
+}
+
+#category-search-icon {
+    position: absolute;
+    top: 40%;
+    left: 57%;
+    color: gray;
+}
+
+.btn-category {
+    color: white;
+    background-color: rgba(9, 122, 242, 0.916);
+    border: 0;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin-left: 13.6rem;
+}
+
+.btn-category:hover {
+    color: white;
+    background-color: rgba(1, 100, 207, 0.943);
+    border: 0;
+    border-radius: 5px;
+    padding: 5px 10px;
+}

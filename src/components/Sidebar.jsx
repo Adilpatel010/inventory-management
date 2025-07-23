@@ -1,0 +1,147 @@
+import React from 'react'
+import { NavLink } from 'react-router'
+import { useState } from 'react';
+
+import { TbLayoutGrid } from "react-icons/tb";
+import { LuWarehouse } from "react-icons/lu";
+import { BsCart3 } from "react-icons/bs";
+import { LuUsers } from "react-icons/lu";
+import { LuUser } from "react-icons/lu";
+import { IoMdAdd } from "react-icons/io";
+import { MdOutlineCategory } from "react-icons/md";
+import { MdFormatListBulleted } from "react-icons/md";
+import { PiPackage } from "react-icons/pi";
+import { LuPackage2 } from "react-icons/lu";
+import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
+import { TbLogout } from "react-icons/tb";
+
+const Sidebar = () => {
+
+    const [isWareOpen, setIsWareOpen] = useState(false);
+    const [isSupplierOpen, setIsSupplierOpen] = useState(false);
+    const [isPurchaseOpen, setIsPurchaseOpen] = useState(false);
+    const [isCategoryOpen, setIsCategoryOpen] = useState(false);
+    const [isProductOpen, setIsProductOpen] = useState(false);
+
+    const toggleWare = () => setIsWareOpen(!isWareOpen);
+    const toggleSupplier = () => setIsSupplierOpen(!isSupplierOpen);
+    const togglePurchase = () => setIsPurchaseOpen(!isPurchaseOpen);
+    const toggleCategory = () => setIsCategoryOpen(!isCategoryOpen);
+    const toggleProduct = () => setIsProductOpen(!isProductOpen);
+
+    return (
+        <div>
+            <div className="container-fluid" id='sidemain'>
+                <div className="row">
+                    <div className="col-lg-2" id='sidebar'>
+                        <div className='menu'>
+                            <div className='sidebar-content'>
+                                <i className="fa-solid fa-bars"></i>
+                            </div>
+                            <ul>
+                                <NavLink to="/dashboard">
+                                    <li><TbLayoutGrid className='sidebar-icon' />Dashboard</li></NavLink>
+                                <NavLink to="">
+                                    <li className='ware-btn' onClick={toggleWare}>
+                                        <LuWarehouse className='sidebar-icon' />Warehouse
+                                        <span className={`fa-solid ${isWareOpen ? 'fa-angle-up' : 'fa-angle-down'}`}></span>
+                                    </li></NavLink>
+
+                                <ul className={`ware-show list-unstyled ${isWareOpen ? 'show' : ''}`}>
+                                    <NavLink to="/warehouse/add">
+                                        <li className={({ isActive }) => isActive ? 'link active' : 'link'} id='link'>
+                                            <IoMdAdd className='sidebar-icon' /> Add Warehouse</li>
+                                    </NavLink>
+
+                                    <NavLink to="/warehouse/list">
+                                        <li className={({ isActive }) => isActive ? 'link active' : 'link'} id='link'>
+                                            <MdFormatListBulleted className='sidebar-icon' /> List Warehouse</li>
+                                    </NavLink>
+                                </ul>
+
+                                <NavLink to="/s">
+                                    <li onClick={toggleSupplier}><LuUsers className='sidebar-icon' />Supplier
+                                        <span className={`fa-solid ${isSupplierOpen ? 'fa-angle-up' : 'fa-angle-down'}`}></span>
+                                    </li>
+                                </NavLink>
+                                <ul className={`ware-show list-unstyled ${isSupplierOpen ? 'show' : ''}`}>
+                                    <NavLink to="/supplier/add">
+                                        <li className={({ isActive }) => isActive ? 'link active' : 'link'} id='link'>
+                                            <IoMdAdd className='sidebar-icon' /> Add Supplier</li>
+                                    </NavLink>
+
+                                    <NavLink to="/supplier/list">
+                                        <li className={({ isActive }) => isActive ? 'link active' : 'link'} id='link'>
+                                            <MdFormatListBulleted className='sidebar-icon' /> List Supplier</li>
+                                    </NavLink>
+                                </ul>
+
+                                <NavLink to="/p">
+                                    <li onClick={togglePurchase}><BsCart3 className='sidebar-icon' />Purchase
+                                        <span className={`fa-solid ${isPurchaseOpen ? 'fa-angle-up' : 'fa-angle-down'}`}></span>
+                                    </li></NavLink>
+                                <ul className={`ware-show list-unstyled ${isPurchaseOpen ? 'show' : ''}`}>
+                                    <NavLink to="/purchase/add">
+                                        <li className={({ isActive }) => isActive ? 'link active' : 'link'} id='link'>
+                                            <IoMdAdd className='sidebar-icon' />Add Purchase</li>
+                                    </NavLink>
+
+                                    <NavLink to="/purchase/list">
+                                        <li className={({ isActive }) => isActive ? 'link active' : 'link'} id='link'>
+                                            <MdFormatListBulleted className='sidebar-icon' /> List Purchase</li>
+                                    </NavLink>
+                                </ul>
+
+                                <NavLink to="/c">
+                                    <li onClick={toggleCategory}><MdOutlineCategory className='sidebar-icon' />Category
+                                        <span className={`fa-solid ${isCategoryOpen ? 'fa-angle-up' : 'fa-angle-down'}`}></span>
+                                    </li></NavLink>
+                                <ul className={`ware-show list unstyled ${isCategoryOpen ? 'show' : ''}`}>
+                                    <NavLink to="/category/add">
+                                        <li className={({ isActive }) => isActive ? 'link active' : 'link'} id='link'>
+                                            <IoMdAdd className='sidebar-icon' /> Add Category</li>
+                                    </NavLink>
+
+                                    <NavLink to="/category/list">
+                                        <li className={({ isActive }) => isActive ? 'link active' : 'link'} id='link'>
+                                            <MdFormatListBulleted className='sidebar-icon' /> List Category</li>
+                                    </NavLink>
+                                </ul>
+                                <NavLink to="/pr">
+                                    <li onClick={toggleProduct}><LuPackage2 className='sidebar-icon' />Product
+                                        <span className={`fa-solid ${isProductOpen ? 'fa-angle-up' : 'fa-angle-down'}`}></span>
+                                    </li></NavLink>
+
+                                <ul className={`ware-show list unstyled ${isProductOpen ? 'show' : ''}`}>
+                                    <NavLink to="/product/add">
+                                        <li className={({ isActive }) => isActive ? 'link active' : 'link'} id='link'>
+                                            <IoMdAdd className='sidebar-icon' /> Add Product</li>
+                                    </NavLink>
+
+                                    <NavLink to="/product/list">
+                                        <li className={({ isActive }) => isActive ? 'link active' : 'link'} id='link'>
+                                            <MdFormatListBulleted className='sidebar-icon' /> List Product</li>
+                                    </NavLink>
+                                </ul>
+
+                                <NavLink to="/user">
+                                    <li><LuUser className='sidebar-icon' />User</li></NavLink>
+                                <NavLink to="/stock">
+                                    <li><PiPackage className='sidebar-icon' />Stock</li></NavLink>
+
+
+                                <NavLink to="/organization">
+                                    <li><HiOutlineBuildingOffice2 className='sidebar-icon' />Organization</li></NavLink>
+                                <NavLink to="logout">
+                                    <li><TbLogout className='sidebar-icon' />Logout</li></NavLink>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+export default Sidebar
+
