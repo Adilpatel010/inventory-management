@@ -1,4 +1,4 @@
-/* ==============>> Add purchase css <<============= */
+/* ============>> create user css <<=============== */
 #form {
     box-shadow: 2px 2px 20px 10px rgb(241, 241, 241);
 }
@@ -19,7 +19,7 @@
     padding: 5px 10px;
 }
 
-/* ================>> List purchase css <<================ */
+/* ============>> List user css <<=============== */
 .tab {
     width: 11%;
 }
@@ -38,27 +38,28 @@
     border-radius: 50px;
     margin: 0 6px;
 }
-#purchase-search {
+
+#user-search {
     margin-left: 17%;
 }
 
-#purchase-search-icon {
+#user-search-icon {
     position: absolute;
     top: 40%;
-    left: 57.8%;
+    left: 55%;
     color: gray;
 }
 
-.btn-purchase {
+.btn-user {
     color: white;
     background-color: rgba(9, 122, 242, 0.916);
     border: 0;
     border-radius: 5px;
     padding: 5px 10px;
-    margin-left: 12.8rem;
+    margin-left: 14.9rem;
 }
 
-.btn-purchase:hover {
+.btn-user:hover {
     color: white;
     background-color: rgba(1, 100, 207, 0.943);
     border: 0;

@@ -5,10 +5,12 @@ import './assets/css/supplier.css'
 import './assets/css/purchase.css'
 import './assets/css/category.css'
 import './assets/css/product.css'
+import './assets/css/user.css'
+import './assets/css/adminlogin.css'
 import Header from './components/Header'
 import Sidebar from './components/Sidebar'
 import Dashboard from './pages/dashboard/Dashboard'
-import { Routes, Route } from 'react-router'
+import { Routes, Route, useLocation } from 'react-router'
 import AddWarehouse from './pages/warehouse/AddWarehouse'
 import ListWarehouse from './pages/warehouse/ListWarehouse'
 import AddSupplier from './pages/supplier/AddSupplier'
@@ -20,47 +22,81 @@ import AddCategory from './pages/category/Addcategory'
 import AddProduct from './pages/product/AddProduct'
 import ListProduct from './pages/product/ListProduct'
 import { createContext, useEffect, useState } from 'react'
+import CreateUser from './pages/user/CreateUser'
+import ListUser from './pages/user/ListUser'
+import Login from './pages/user/AdminLogin'
+import ProtectedRoute from './components/ProtectedRoute'
+import Logout from './pages/Logout'
 
 const MyContext = createContext();
 
 function App() {
 
   const [isToggleSidebar, setIsToggleSidebar] = useState(false)
-
+  const location = useLocation();
   const values = {
     isToggleSidebar, setIsToggleSidebar
   }
-
+  const isLoginPage = location.pathname === '/';
   // useEffect(() => {
   //   alert(isToggleSidebar)
   // }, [isToggleSidebar])
 
   return (
     <>
-      <MyContext.Provider value={values}>
-        <Header />
-        <div className='d-flex'>
-          <div className={`sidebar-wrapper ${isToggleSidebar === true ? 'toggle' : ''}`}>
-            <Sidebar />
+      <Routes>
+        <Route path="/" element={<Login />} />
+      </Routes>
+
+      {!isLoginPage && (
+        <MyContext.Provider value={values}>
+          <Header />
+          <div className='d-flex'>
+            <div className={`sidebar-wrapper ${isToggleSidebar === true ? 'toggle' : ''}`}>
+              <Sidebar />
+            </div>
+            <div style={{ height: "90vh", overflowY: "scroll"}}
+              className={`content ${isToggleSidebar === true ? 'toggle' : ''}`}>
+              <Routes>
+                <Route
+                  path="/dashboard"
+                  element={
+                    <ProtectedRoute>
+                      <Dashboard />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route path="/warehouse/add"
+                  element={<ProtectedRoute><AddWarehouse /> </ProtectedRoute>} />
+                <Route path='/warehouse/list'
+                  element={<ProtectedRoute><ListWarehouse /></ProtectedRoute>} />
+                <Route path='/supplier/add'
+                  element={<ProtectedRoute><AddSupplier /></ProtectedRoute>} />
+                <Route path='/supplier/list'
+                  element={<ProtectedRoute><ListSupplier /></ProtectedRoute>} />
+                <Route path='/purchase/add'
+                  element={<ProtectedRoute><AddPurchase /></ProtectedRoute>} />
+                <Route path='/purchase/list'
+                  element={<ProtectedRoute><ListPurchase /></ProtectedRoute>} />
+                <Route path='/category/add'
+                  element={<ProtectedRoute><AddCategory /></ProtectedRoute>} />
+                <Route path='/category/list'
+                  element={<ProtectedRoute><ListCategory /></ProtectedRoute>} />
+                <Route path='/product/add'
+                  element={<ProtectedRoute><AddProduct /></ProtectedRoute>} />
+                <Route path='/product/list'
+                  element={<ProtectedRoute><ListProduct /></ProtectedRoute>} />
+                <Route path='/user/create'
+                  element={<ProtectedRoute><CreateUser /></ProtectedRoute>} />
+                <Route path='/user/list'
+                  element={<ProtectedRoute><ListUser /></ProtectedRoute>} />
+                <Route path='/logout'
+                  element={<ProtectedRoute><Logout /></ProtectedRoute>} />
+              </Routes>
+            </div>
           </div>
-          <div style={{ height: "90vh", overflowY: "scroll" }}
-            className={`content ${isToggleSidebar === true ? 'toggle' : ''}`}>
-            <Routes>
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/warehouse/add" element={<AddWarehouse />} />
-              <Route path='/warehouse/list' element={<ListWarehouse />} />
-              <Route path='/supplier/add' element={<AddSupplier />} />
-              <Route path='/supplier/list' element={<ListSupplier />} />
-              <Route path='/purchase/add' element={<AddPurchase />} />
-              <Route path='/purchase/list' element={<ListPurchase />} />
-              <Route path='/category/add' element={<AddCategory />} />
-              <Route path='/category/list' element={<ListCategory />} />
-              <Route path='/product/add' element={<AddProduct />} />
-              <Route path='/product/list' element={<ListProduct />} />
-            </Routes>
-          </div>
-        </div>
-      </MyContext.Provider>
+        </MyContext.Provider>
+      )}
     </>
   )
 }

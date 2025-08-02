@@ -21,7 +21,7 @@
 
 /* List supplier css */
 .tab {
-    width: 11%;
+   white-space: nowrap;
 }
 
 .updel-icon {
@@ -46,7 +46,7 @@
 #supplier-search-icon {
     position: absolute;
     top: 40%;
-    left: 55%;
+    left: 56%;
     color: gray;
 }
 
@@ -56,7 +56,7 @@
     border: 0;
     border-radius: 5px;
     padding: 5px 10px;
-    margin-left: 15.4rem;
+    margin-left: 14rem;
 }
 
 .btn-supplier:hover {

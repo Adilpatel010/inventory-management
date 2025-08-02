@@ -72,10 +72,10 @@ const ListProduct = () => {
 
     return (
         <div>
-            <div className="container-fluid font" style={{ backgroundColor: 'rgba(228, 239, 250, 0.916)' }}>
+            <div className="container-fluid font">
                 <div className="row justify-content-center">
                     <div className="col-lg-11">
-                        <nav className="navbar sticky-top navbar-expand-lg navbar-light d-flex align-items-center justify-content-between" style={{ backgroundColor: 'rgba(228, 239, 250, 0.916)', height: "80px" }}>
+                        <nav className="navbar sticky-top navbar-expand-lg navbar-light d-flex align-items-center justify-content-between" style={{ backgroundColor: '#f1f1f1', height: "80px" }}>
                             <h3 className='mt-2'>Product List</h3>
                             <form className="d-flex" role="search" id="product-search">
                                 <input
@@ -91,7 +91,7 @@ const ListProduct = () => {
                             </form>
                             <NavLink to="/product/add"><button className='btn-product'>+ Add Product</button></NavLink>
                         </nav>
-                        <div className='col-lg-12' style={{ overflowX: "auto" }}>
+                        <div className='col-lg-12' id='list-scroll'>
                             <table className="table table-bordered" style={{ width: '150px', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>
                                 <thead className='table-secondary'>
                                     <tr>

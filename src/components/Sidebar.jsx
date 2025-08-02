@@ -22,12 +22,14 @@ const Sidebar = () => {
     const [isPurchaseOpen, setIsPurchaseOpen] = useState(false);
     const [isCategoryOpen, setIsCategoryOpen] = useState(false);
     const [isProductOpen, setIsProductOpen] = useState(false);
+    const [isUserOpen, setIsUserOpen] = useState(false);
 
     const toggleWare = () => setIsWareOpen(!isWareOpen);
     const toggleSupplier = () => setIsSupplierOpen(!isSupplierOpen);
     const togglePurchase = () => setIsPurchaseOpen(!isPurchaseOpen);
     const toggleCategory = () => setIsCategoryOpen(!isCategoryOpen);
     const toggleProduct = () => setIsProductOpen(!isProductOpen);
+    const toggleUser = () => setIsUserOpen(!isUserOpen);
 
     return (
         <div>
@@ -38,7 +40,7 @@ const Sidebar = () => {
                             <ul>
                                 <NavLink to="/dashboard">
                                     <li><TbLayoutGrid className='sidebar-icon' />Dashboard</li></NavLink>
-                                <NavLink to="">
+                                <NavLink to="/w">
                                     <li onClick={toggleWare}>
                                         <LuWarehouse className='sidebar-icon' />Warehouse
                                         <span className={`fa-solid ${isWareOpen ? 'fa-angle-up' : 'fa-angle-down'}`}></span>
@@ -122,15 +124,31 @@ const Sidebar = () => {
                                     </NavLink>
                                 </ul>
 
-                                <NavLink to="/user">
-                                    <li><LuUser className='sidebar-icon' />User</li></NavLink>
+                                <NavLink to="/u">
+                                    <li onClick={toggleUser}><LuUser className='sidebar-icon' />User
+                                        <span className={`fa-solid ${isUserOpen ? 'fa-angle-up' : 'fa-angle-down'}`}></span>
+                                    </li>
+                                </NavLink>
+
+                                <ul className={`ware-show list unstyled ${isUserOpen ? 'show' : ''}`}>
+                                    <NavLink to="/user/create">
+                                        <li className={({ isActive }) => isActive ? 'link-active' : 'link'} id='link' >
+                                            <IoMdAdd className='sidebar-icon' /> Create User </li>
+                                    </NavLink>
+
+                                    <NavLink to="/user/list">
+                                        <li className={({ isActive }) => isActive ? 'link active' : 'link'} id='link'>
+                                            <MdFormatListBulleted className='sidebar-icon' /> List User</li>
+                                    </NavLink>
+                                </ul>
+
                                 <NavLink to="/stock">
                                     <li><PiPackage className='sidebar-icon' />Stock</li></NavLink>
 
 
                                 <NavLink to="/organization">
                                     <li><HiOutlineBuildingOffice2 className='sidebar-icon' />Organization</li></NavLink>
-                                <NavLink to="logout">
+                                <NavLink to="/logout">
                                     <li><TbLogout className='sidebar-icon' />Logout</li></NavLink>
                             </ul>
                         </div>

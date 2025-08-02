@@ -1,8 +1,19 @@
 import axios from "axios";
+// Save token (run this once somewhere before calling APIs)
+// localStorage.setItem("token", "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4NTExNjczNDYxIiwiaWF0IjoxNzUzODY4MTg4LCJleHAiOjE3NTM4NzE3ODh9.LQ6fp91IJfuIPRXmN3dbbbVfPW_lqAhA6HrcGg07MEc");
 
 const api = axios.create({
-    baseURL: "http://192.168.0.160:8080/api/v1",
+    baseURL: "http://192.168.0.167:8080/api/v1",
 })
+
+// Add JWT token to every request
+api.interceptors.request.use((config) => {
+    const token = localStorage.getItem("token");
+    if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+});
 
 // --------------->> warehouse all api <<---------------
 
@@ -152,6 +163,11 @@ export const searchCategoryData = (search) => {
     return api.get(`category/categories?search=${search}`)
 }
 
+// count category
+export const getCategoryCount = () => {
+    return api.get('category/count')
+}
+
 // ----------------->> Product all api <<--------------
 
 // get product
@@ -188,3 +204,56 @@ export const getProductId = (id) => {
 export const searchProductData = (search) => {
     return api.get(`/product/products?search=${search}`)
 }
+
+// count product
+export const getProductCount = () => {
+    return api.get("/product/count")
+}
+
+// ----------------->> User all api <<--------------
+
+// count user
+export const getUserCount = () => {
+    return api.get("/user/count")
+}
+
+// get user
+export const getUserData = () => {
+    return api.get("/user")
+}
+
+// create user 
+export const registerUser = (data) => {
+    return api.post("/auth/register", data)
+}
+
+// update status 
+export const updateUserStatus = (id, status) => {
+    return api.patch(`/user/${id}/${status == "ACTIVE" ? "INACTIVE" : "ACTIVE"}`)
+}
+
+// update userdata
+export const updateUserData = (id, data) => {
+    return api.put(`/user/${id}`, data)
+}
+
+// get userId
+export const getUserId = (id) => {
+    return api.get(`/user/${id}`)
+}
+
+// delete user 
+export const deleteUserData = (id) => {
+    return api.delete(`/user/${id}`)
+}
+
+// search user 
+export const searchUserData = (search) => {
+    return api.get(`/user/searchUser?search=${search}`)
+}
+
+// login and register api
+export const loginUser = (data) => {
+    return api.post("/auth/login", data);
+};
+

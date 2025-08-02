@@ -82,10 +82,10 @@ const ListWarehouse = () => {
 
     return (
         <>
-            <div className="container-fluid font" style={{ backgroundColor: 'rgba(228, 239, 250, 0.916)' }}>
+            <div className="container-fluid font" style={{ backgroundColor: '#f1f1f1', height: '100vh' }}>
                 <div className="row justify-content-center">
                     <div className="col-lg-11">
-                        <nav className="navbar sticky-top navbar-expand-lg navbar-light d-flex align-items-center justify-content-between" style={{ backgroundColor: 'rgba(228, 239, 250, 0.916)', height: "80px" }}>
+                        <nav className="navbar sticky-top navbar-expand-lg navbar-light d-flex align-items-center justify-content-between" style={{ backgroundColor: '#f1f1f1', height: "80px"}}>
 
                             <h3 className='mt-2'>Warehouse List</h3>
                             <form className="d-flex" role="search" id="warehouse-search">
@@ -107,6 +107,7 @@ const ListWarehouse = () => {
                                 <thead className='table-secondary' style={{ width: '150px', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>
                                     <tr>
                                         <th>Organization ID</th>
+                                         <th>Organization Name </th>
                                         <th>Location </th>
                                         <th>Title</th>
                                         <th>Description</th>
@@ -121,6 +122,7 @@ const ListWarehouse = () => {
                                             return (
                                                 <tr key={elm.wareHouseId}>
                                                     <td>{elm.organizationId}</td>
+                                                      <td>{elm.organizationName}</td>
                                                     <td>{elm.locationOrArea}</td>
                                                     <td>{elm.title}</td>
                                                     <td>{elm.description}</td>
