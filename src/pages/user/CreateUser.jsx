@@ -61,7 +61,6 @@ const CreateUser = () => {
       } else {
         const res = await registerUser(userData);
         alert('User added successfully');
-
         console.log('Added:', res.data);
 
         const token =
@@ -78,15 +77,15 @@ const CreateUser = () => {
 
       // Reset form
       setUserData({
-        organizationId: "organizationId",
-        fullName: "fullName",
-        mobileNumber: "mobileNumber",
-        password: "password",
-        email: "email",
-        profilePicture: "profilePicture",
-        department: "department",
-        role: "role",
-        gender: "gender",
+        organizationId: "",
+        fullName: "",
+        mobileNumber: "",
+        password: "",
+        email: "",
+        profilePicture: "",
+        department: "",
+        role: "",
+        gender: "",
       });
       setErrors({});
       setUpdateData(false);
@@ -101,7 +100,6 @@ const CreateUser = () => {
       setUserData({ ...state })
     }
   }, [state])
-
 
   return (
     <div>

@@ -5,9 +5,13 @@ const Logout = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        localStorage.removeItem('token');
-
-        navigate('/');
+        const confirmLogout = window.confirm("Are you sure you want to logout?");
+        if (confirmLogout) {
+            localStorage.removeItem('token');
+            navigate('/');
+        } else {
+            navigate('/dashboard');
+        }
     }, [navigate]);
 
     return <p>Logging out...</p>;

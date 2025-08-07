@@ -56,7 +56,7 @@ const Login = () => {
     };
 
     return (
-        <div className="container" id='loginmain'>
+        <div className="container-fluid" id='loginmain'>
             <div className="col-md-4 p-4 bg-light rounded font shadow">
                 <h3 className="text-center">Admin Login</h3>
                 <form onSubmit={handleSubmit}>
@@ -66,6 +66,8 @@ const Login = () => {
                             type="text"
                             className="form-control shadow-none border-2"
                             placeholder='Mobile Number'
+                            pattern="[0-9]{10}"
+                            maxLength={10}
                             value={mobileNumber}
                             onChange={(e) => setMobileNumber(e.target.value)}
                         />

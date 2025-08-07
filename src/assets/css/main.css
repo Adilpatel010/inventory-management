@@ -137,7 +137,7 @@ body {
     padding: 8px 16px;
     font-size: 16px;
     cursor: pointer;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
     transition: 0.1s;
     border-left: 2px solid white;
     position: relative;
@@ -236,17 +236,18 @@ body {
 .ware-show {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.3s ease-out;
+    transition: max-height 0.5s ease-out;
 }
 
 .ware-show.show {
     max-height: 500px;
-    transition: max-height 0.5s ease-in;
+    transition: max-height 0.7s ease-in;
 }
 
 #sidebar ul ul li {
     font-size: 14.2px;
     padding-left: 29px;
+    transition: 0.3s ease-in-out;
 }
 
 #sidebar ul li span {
@@ -254,7 +255,7 @@ body {
     top: 52%;
     right: 15px;
     transform: translateY(-50%);
-    font-size: 15px;
+    font-size: 14.5px;
     color: rgb(100, 100, 100);
 }
 
@@ -318,3 +319,4 @@ body {
 #list-scroll::-webkit-scrollbar-thumb:hover {
     background-color: #6a6a6a;
 }
+

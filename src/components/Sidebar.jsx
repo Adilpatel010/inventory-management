@@ -12,6 +12,7 @@ import { MdOutlineCategory } from "react-icons/md";
 import { MdFormatListBulleted } from "react-icons/md";
 import { PiPackage } from "react-icons/pi";
 import { LuPackage2 } from "react-icons/lu";
+import { RiAlignItemBottomLine } from "react-icons/ri";
 import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
 import { TbLogout } from "react-icons/tb";
 
@@ -23,6 +24,8 @@ const Sidebar = () => {
     const [isCategoryOpen, setIsCategoryOpen] = useState(false);
     const [isProductOpen, setIsProductOpen] = useState(false);
     const [isUserOpen, setIsUserOpen] = useState(false);
+    const [isSalesOpen, setIsSalesOpen] = useState(false)
+    const [iscustomerOpen, setIsCustomerOpen] = useState(false)
 
     const toggleWare = () => setIsWareOpen(!isWareOpen);
     const toggleSupplier = () => setIsSupplierOpen(!isSupplierOpen);
@@ -30,6 +33,8 @@ const Sidebar = () => {
     const toggleCategory = () => setIsCategoryOpen(!isCategoryOpen);
     const toggleProduct = () => setIsProductOpen(!isProductOpen);
     const toggleUser = () => setIsUserOpen(!isUserOpen);
+    const toggleSales = () => setIsSalesOpen(!isSalesOpen);
+    const toggleCustomer = () => setIsCustomerOpen(!iscustomerOpen);
 
     return (
         <div>
@@ -142,9 +147,41 @@ const Sidebar = () => {
                                     </NavLink>
                                 </ul>
 
-                                <NavLink to="/stock">
-                                    <li><PiPackage className='sidebar-icon' />Stock</li></NavLink>
+                                <NavLink to="/se">
+                                    <li onClick={toggleSales}><PiPackage className='sidebar-icon' />Sales
+                                        <span className={`fa-solid ${isSalesOpen ? 'fa-angle-up' : 'fa-angle-down'}`}></span>
+                                    </li></NavLink>
 
+                                <ul className={`ware-show list unstyled ${isSalesOpen ? 'show' : ''}`}>
+                                    <NavLink to="/ce">
+                                        <li onClick={toggleCustomer} className={({ isActive }) => isActive ? 'link-active' : 'link'} id='link'>
+                                            <LuUsers className='sidebar-icon' /> Customer
+                                            <span className={`fa-solid ${iscustomerOpen ? 'fa-angle-up' : 'fa-angle-down'}`}></span>
+                                        </li>
+                                    </NavLink>
+
+                                    <ul className={`ware-show list unstyled ${iscustomerOpen ? 'show' : ''}`}>
+                                        <NavLink to="/customer/create">
+                                            <li className={({ isActive }) => isActive ? 'link-active' : 'link'} id='link' >
+                                                <IoMdAdd className='sidebar-icon' /> Create Customer </li>
+                                        </NavLink>
+
+                                        <NavLink to="/customer/list">
+                                            <li className={({ isActive }) => isActive ? 'link active' : 'link'} id='link'>
+                                                <MdFormatListBulleted className='sidebar-icon' /> List Customer</li>
+                                        </NavLink>
+                                    </ul>
+
+                                    <NavLink to="/sales/order">
+                                        <li className={({ isActive }) => isActive ? 'link-active' : 'link'} id='link'>
+                                            <MdFormatListBulleted className='sidebar-icon' /> Sales Order </li>
+                                    </NavLink>
+
+                                    <NavLink to="/sales/item">
+                                        <li className={({ isActive }) => isActive ? 'link-active' : 'link'} id='link'>
+                                            <RiAlignItemBottomLine className='sidebar-icon' /> Sales Item </li>
+                                    </NavLink>
+                                </ul>
 
                                 <NavLink to="/organization">
                                     <li><HiOutlineBuildingOffice2 className='sidebar-icon' />Organization</li></NavLink>

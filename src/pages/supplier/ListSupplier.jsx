@@ -7,20 +7,31 @@ const ListSupplier = () => {
     const [data, setData] = useState([])
     const [id, setId] = useState("")
     const [search, setSearch] = useState("")
+    const [loading, setLoading] = useState(false)
+    const [error, setError] = useState("")
+    const [noData, setNoData] = useState(false)
     const Navigate = useNavigate()
 
     // list supplier
     const listSupplier = async () => {
+        setLoading(true)
+        setError("")
+        setNoData(false)
+
         try {
             const res = await getSupplierData()
-            setData(res.data)
+            if (res.data.length === 0) {
+                setNoData(true)
+            } else {
+                setData(res.data)
+            }
         } catch (err) {
-            console.log(err);
+            console.error(err)
+            setError("Server error occurred. Please try again later.")
+        } finally {
+            setLoading(false)
         }
     }
-    useEffect(() => {
-        listSupplier()
-    }, [])
 
     // delete supplier
     const handleDelete = async (id) => {
@@ -32,6 +43,7 @@ const ListSupplier = () => {
                 listSupplier()
             } catch (err) {
                 console.log("Delete error", err);
+                setError("Unable to delete category.")
             }
         } else {
             console.log("Delete Canceled");
@@ -47,22 +59,36 @@ const ListSupplier = () => {
         }
         catch (err) {
             console.log(err);
+            setError("Unable to update status.")
         }
     }
+
     // search supplier
     const handleSearch = async (e) => {
         const value = e.target.value
         setSearch(value)
+
+        setLoading(true)
+        setError("")
+        setNoData(false)
+
         try {
             const res = await searchSupplierData(value)
-            setData(res.data)
-        }
-        catch (err) {
-            console.log("Search err:", err);
+            if (res.data.length === 0) {
+                setNoData(true)
+                setData([])
+            } else {
+                setData(res.data)
+            }
+        } catch (err) {
+            console.error("Search Error:", err)
+            setError("Search failed. Please try again.")
+        } finally {
+            setLoading(false)
         }
     }
 
-    // update supplier navigate
+    // update supplier to navigate
     const handleUpdate = async (id) => {
         try {
             const res = await getSupplierId(id)
@@ -72,8 +98,13 @@ const ListSupplier = () => {
         }
         catch (err) {
             console.log(err)
+            setError("Unable to fetch category details.")
         }
     }
+
+    useEffect(() => {
+        listSupplier()
+    }, [])
 
     return (
         <>
@@ -97,42 +128,54 @@ const ListSupplier = () => {
                             <NavLink to="/supplier/add"><button className='btn-supplier'>+ Add Supplier</button></NavLink>
                         </nav>
                         <div className='col-lg-12' style={{ overflowX: "auto" }}>
-                            <table className="table table-bordered">
-                                <thead className='table-secondary' style={{ width: '150px', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>
-                                    <tr>
-                                        <th>Shop Name </th>
-                                        <th>GST No</th>
-                                        <th>Phone</th>
-                                        <th>Address</th>
-                                        <th>Status</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {
-                                        data.map((sup) => {
-                                            return (
-                                                <tr key={sup.supplierId}>
-                                                    <td>{sup.supplierShopName}</td>
-                                                    <td>{sup.supplierGstNo}</td>
-                                                    <td>{sup.phoneNumber}</td>
-                                                    <td>{sup.locationOrArea}</td>
-                                                    <td>
-                                                        <div className="form-check form-switch">
-                                                            <input onChange={() => changeStatus(sup.supplierId, sup.status)} className="form-check-input" checked={sup.status == "ACTIVE"} type="checkbox" role="switch" />
-                                                        </div>
-                                                    </td>
-                                                    <td className='tab'>
-                                                        <i onClick={() => handleUpdate(sup.supplierId)} className="fa-solid fa-pen-to-square updel-icon"></i>
-                                                        <i onClick={() => handleDelete(sup.supplierId)} className="text-danger fa-solid fa-trash updel-icons"></i>
-                                                    </td>
-                                                </tr>
-                                            )
-                                        })
-                                    }
+                            {loading && (
+                                <div className="text-center p-3">
+                                    <div className="spinner-border text-secondary" role="status">
+                                        <span className="visually-hidden">Loading...</span>
+                                    </div>
+                                </div>
+                            )}
+                            {error && <p className="text-danger text-center p-3">{error}</p>}
+                            {noData && !loading && !error && <p className="text-center p-3">No Data Found</p>}
 
-                                </tbody>
-                            </table>
+                            {!loading && !error && !noData && (
+                                <table className="table table-bordered">
+                                    <thead className='table-secondary' style={{ width: '150px', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>
+                                        <tr>
+                                            <th>Shop Name </th>
+                                            <th>GST No</th>
+                                            <th>Phone</th>
+                                            <th>Address</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {
+                                            data.map((sup) => {
+                                                return (
+                                                    <tr key={sup.supplierId}>
+                                                        <td>{sup.supplierShopName}</td>
+                                                        <td>{sup.supplierGstNo}</td>
+                                                        <td>{sup.phoneNumber}</td>
+                                                        <td>{sup.locationOrArea}</td>
+                                                        <td>
+                                                            <div className="form-check form-switch">
+                                                                <input onChange={() => changeStatus(sup.supplierId, sup.status)} className="form-check-input" checked={sup.status == "ACTIVE"} type="checkbox" role="switch" />
+                                                            </div>
+                                                        </td>
+                                                        <td className='tab'>
+                                                            <i onClick={() => handleUpdate(sup.supplierId)} className="fa-solid fa-pen-to-square updel-icon"></i>
+                                                            <i onClick={() => handleDelete(sup.supplierId)} className="text-danger fa-solid fa-trash updel-icons"></i>
+                                                        </td>
+                                                    </tr>
+                                                )
+                                            })
+                                        }
+
+                                    </tbody>
+                                </table>
+                            )}
                         </div>
                     </div>
                 </div>

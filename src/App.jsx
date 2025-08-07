@@ -55,7 +55,7 @@ function App() {
             <div className={`sidebar-wrapper ${isToggleSidebar === true ? 'toggle' : ''}`}>
               <Sidebar />
             </div>
-            <div style={{ height: "90vh", overflowY: "scroll"}}
+            <div style={{ height: "90vh", overflowY: "scroll" }}
               className={`content ${isToggleSidebar === true ? 'toggle' : ''}`}>
               <Routes>
                 <Route

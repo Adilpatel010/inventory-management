@@ -257,3 +257,11 @@ export const loginUser = (data) => {
     return api.post("/auth/login", data);
 };
 
+// ----------------->> Sales all api <<--------------
+
+// ----------------->> Sales/customer all api <<--------------
+
+// get customer
+export const getCustomerData=()=>{
+    return api.get("/Customer")
+}
