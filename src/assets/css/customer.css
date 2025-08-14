@@ -1,4 +1,4 @@
-/* ============>> Add warehouse css <<=============== */
+/* =============>> Add customer <<============= */
 #form {
     box-shadow: 2px 2px 20px 10px rgb(241, 241, 241);
 }
@@ -20,9 +20,9 @@
     padding: 5px 10px;
 }
 
-/* ============>> List warehouse css <<=============== */
+/* List customer css */
 .tab {
-    width: 11%;
+    white-space: nowrap;
 }
 
 .updel-icon {
@@ -40,28 +40,28 @@
     margin: 0 6px;
 }
 
-#product-search {
+#customer-search {
     margin-left: 17%;
 }
 
-#product-search-icon {
+#customer-search-icon {
     position: absolute;
     top: 40%;
-    left: 55%;
+    left: 58.6%;
     color: gray;
 }
 
-.btn-product {
+.btn-customer {
     color: white;
     background-color: rgba(9, 122, 242, 0.916);
     border: 0;
     border-radius: 5px;
     padding: 5px 10px;
-    margin-left: 14.9rem;
+    margin-left: 11.9rem;
     transition: 0.3s ease-in-out;
 }
 
-.btn-product:hover {
+.btn-customer:hover {
     color: white;
     background-color: rgba(1, 100, 207, 0.943);
     border: 0;

@@ -6,6 +6,7 @@ import './assets/css/purchase.css'
 import './assets/css/category.css'
 import './assets/css/product.css'
 import './assets/css/user.css'
+import './assets/css/customer.css'
 import './assets/css/adminlogin.css'
 import Header from './components/Header'
 import Sidebar from './components/Sidebar'
@@ -22,11 +23,14 @@ import AddCategory from './pages/category/Addcategory'
 import AddProduct from './pages/product/AddProduct'
 import ListProduct from './pages/product/ListProduct'
 import { createContext, useEffect, useState } from 'react'
-import CreateUser from './pages/user/CreateUser'
+import AddUser from './pages/user/AddUser'
 import ListUser from './pages/user/ListUser'
 import Login from './pages/user/AdminLogin'
 import ProtectedRoute from './components/ProtectedRoute'
 import Logout from './pages/Logout'
+import AddCustomer from './pages/sales/customer/Addcustomer'
+import ListCustomer from './pages/sales/customer/Listcustomer'
+
 
 const MyContext = createContext();
 
@@ -86,10 +90,14 @@ function App() {
                   element={<ProtectedRoute><AddProduct /></ProtectedRoute>} />
                 <Route path='/product/list'
                   element={<ProtectedRoute><ListProduct /></ProtectedRoute>} />
-                <Route path='/user/create'
-                  element={<ProtectedRoute><CreateUser /></ProtectedRoute>} />
+                <Route path='/user/add'
+                  element={<ProtectedRoute><AddUser /></ProtectedRoute>} />
                 <Route path='/user/list'
                   element={<ProtectedRoute><ListUser /></ProtectedRoute>} />
+                <Route path='/customer/add'
+                  element={<ProtectedRoute><AddCustomer /></ProtectedRoute>} />
+                <Route path='/customer/list'
+                  element={<ProtectedRoute><ListCustomer /></ProtectedRoute>} />
                 <Route path='/logout'
                   element={<ProtectedRoute><Logout /></ProtectedRoute>} />
               </Routes>

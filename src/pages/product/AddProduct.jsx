@@ -255,7 +255,7 @@ const AddProduct = () => {
 
                             </div>
 
-                            <div className="mt-3">
+                            <div className="col-md-6 mt-3">
                                 <label className="form-label">Description</label>
                                 <textarea
                                     className="form-control shadow-none border-2"

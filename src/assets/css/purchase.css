@@ -9,6 +9,7 @@
     border: 0;
     border-radius: 5px;
     padding: 5px 10px;
+    transition: 0.3s ease-in-out;
 }
 
 .btn-form:hover {
@@ -38,6 +39,7 @@
     border-radius: 50px;
     margin: 0 6px;
 }
+
 #purchase-search {
     margin-left: 17%;
 }
@@ -56,6 +58,7 @@
     border-radius: 5px;
     padding: 5px 10px;
     margin-left: 12.8rem;
+    transition: 0.3s ease-in-out;
 }
 
 .btn-purchase:hover {

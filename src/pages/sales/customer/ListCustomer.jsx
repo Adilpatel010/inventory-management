@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { deleteWarehouseData, getWarehouseData, updateWarehouseStatus, searchWarehouseData, getWarehouseId } from '../../api/apifetcher'
-import { NavLink, useNavigate } from 'react-router'
-import Swal from 'sweetalert2';
+import { deleteCustomerData, getCustomerData, searchCustomerData, updateCustomerStatus } from '../../../api/apifetcher'
+import { NavLink } from 'react-router'
 
-const ListWarehouse = () => {
+const ListCustomer = () => {
 
     const [data, setData] = useState([])
-    const [id, setId] = useState("")
-    const navigate = useNavigate();
-    const [search, setSearch] = useState("");
+    const [search, setSearch] = useState("")
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState("")
     const [noData, setNoData] = useState(false)
@@ -16,22 +13,23 @@ const ListWarehouse = () => {
     const [pageSize, setPageSize] = useState(10)
     const [totalPages, setTotalPages] = useState(1)
 
-
-    // list warehouse
-    const listWarehouse = async (page = 1, size = pageSize) => {
+    // get customer data
+    const listCustomer = async (page = 1, size = pageSize) => {
         setLoading(true)
         setError("")
         setNoData(false)
 
         try {
-            const res = await getWarehouseData(page, size)
-            if (!res.data.data || res.data.data.length === 0) {
+            const res = await getCustomerData(page, size)
+            console.log(res)
+            if (!res.data.data.data || res.data.data.data.length === 0) {
                 setNoData(true)
                 setData([])
                 setTotalPages(1)
             } else {
-                setData(res.data.data)
-                setTotalPages(res.data.totalPages || 1)
+                setTotalPages(res.data.data.totalPages || 1)
+                setData(res.data.data.data)
+                console.log(res.data.data.data)
             }
         } catch (err) {
             console.error(err)
@@ -41,92 +39,52 @@ const ListWarehouse = () => {
         }
     }
 
-    // change status warehouse
+    // change status
     const changeStatus = async (id, status) => {
         console.log(id, status)
         try {
-            const res = await updateWarehouseStatus(id, status)
-            listWarehouse(pageNumber)
+            const res = await updateCustomerStatus(id, status)
+            listCustomer(pageNumber)
         } catch (err) {
             console.error(err)
             setError("Unable to update status.")
         }
     }
 
-    // Delete warehouse
-    // const handleDelete = async (id) => {
-    //     const confirmDelete = window.confirm("Are you sure to delete this warehouse")
-
-    //     if (confirmDelete) {
-    //         try {
-    //             const res = await deleteWarehouseData(id)
-    //             listWarehouse()
-    //         } catch (err) {
-    //             console.log("Delete err", err);
-    //             setError("Unable to delete category.")
-    //         }
-    //     } else {
-    //         console.log("Delete Canceled");
-    //     }
-    // }
-
+    // delete customer
     const handleDelete = async (id) => {
-        Swal.fire({
-            title: "Are you sure?",
-            text: "You won't to delete this warehouse!",
-            icon: "warning",
-            width: '350px',
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!"
-        }).then(async (result) => {
-            if (result.isConfirmed) {
-                try {
-                    await deleteWarehouseData(id);
-                    Swal.fire({
-                        title: "Deleted!",
-                        text: "The warehouse has been deleted.",
-                        icon: "success",
-                        width: "350px"
-                    });
-                    listWarehouse(pageNumber);
-                } catch (err) {
-                    console.error("Delete error:", err);
-                    setError("Unable to delete warehouse.");
-                    Swal.fire({
-                        title: "Error!",
-                        text: "Failed to delete the warehouse.",
-                        icon: "error"
-                    });
-                }
-            } else {
-                console.log("Delete canceled by user");
+        const confirmData = window.confirm("Are you sure to delete this category?")
+        if (confirmData) {
+            try {
+                const res = await deleteCustomerData(id)
+                listCustomer(pageNumber)
+            } catch (err) {
+                console.error(err)
+                setError("Unable to delete category.")
             }
-        });
-    };
+        }
+    }
 
-    // search warehouse
+    // search customer
     const handleSearch = async (e) => {
-        const value = e.target.value;
-        setSearch(value);
+        const value = e.target.value
+        setSearch(value)
 
         if (value.trim() === "") {
-            listWarehouse();
-            return;
+            listCustomer(pageNumber)
+            return
         }
         setLoading(true)
         setError("")
         setNoData(false)
-
         try {
-            const res = await searchWarehouseData(value);
-            if (!res.data || res.data.length === 0) {
+            const res = await searchCustomerData(value)
+            if (!res.data.data || res.data.data.length === 0) {
                 setNoData(true)
                 setData([])
                 setTotalPages(1)
             } else {
-                setData(res.data)
+                setData(res.data.data)
                 setTotalPages(1)
             }
         } catch (err) {
@@ -137,24 +95,11 @@ const ListWarehouse = () => {
         }
     }
 
-    // update warehouse navigate to add
-    const handleUpdate = async (id) => {
-        try {
-            const res = await getWarehouseId(id)
-            console.log(res.data);
-            setId(res.data)
-            navigate("/warehouse/add", { state: res.data })
-        }
-        catch (err) {
-            console.log(err)
-        }
-    }
-
     // Handle page click
     const handlePageChange = (newPage) => {
         if (newPage < 1 || newPage > totalPages) return;
         setPageNumber(newPage)
-        listWarehouse(newPage)
+        listCustomer(newPage)
     }
 
     // Change page size
@@ -162,36 +107,37 @@ const ListWarehouse = () => {
         const newSize = parseInt(e.target.value)
         setPageSize(newSize)
         setPageNumber(1)
-        listWarehouse(1, newSize)
+        listCustomer(1, newSize)
     }
 
     useEffect(() => {
-        listWarehouse();
+        listCustomer(pageNumber)
     }, [])
+
+    console.log(totalPages)
 
     return (
         <>
-            <div className="container-fluid font" style={{ backgroundColor: '#f1f1f1', height: '100vh' }}>
+            <div className="container-fluid font">
                 <div className="row justify-content-center">
                     <div className="col-lg-11">
                         <nav className="navbar sticky-top navbar-expand-lg navbar-light d-flex align-items-center justify-content-between" style={{ backgroundColor: '#f1f1f1', height: "80px" }}>
-
-                            <h3 className='mt-2'>Warehouse List</h3>
-                            <form className="d-flex" role="search" id="warehouse-search">
+                            <h3 className='mt-2'>Category List</h3>
+                            <form className="d-flex" role="search" id="category-search">
                                 <input
                                     className="form-control shadow-none border-2 me-2"
                                     type="search"
-                                    id='warehouse-search-in'
                                     placeholder="Search"
                                     aria-label="Search"
                                     value={search}
                                     onChange={handleSearch}
                                 />
-                                <i className="fa-solid fa-magnifying-glass" id='warehouse-search-icon'></i>
+                                <i className="fa-solid fa-magnifying-glass" id='category-search-icon'></i>
                             </form>
-                            <NavLink to="/warehouse/add"><button className='btn-warehouse'>+ Add Warehouse</button></NavLink>
+                            <NavLink to="/customer/add"><button className='btn-category'>+ Add Category</button></NavLink>
                         </nav>
-                        <div className='col-lg-12' id='list-scroll'>
+
+                        <div className='col-lg-12' style={{ overflowX: "auto" }}>
                             {loading && (
                                 <div className="text-center p-3">
                                     <div className="spinner-border text-secondary" role="status">
@@ -204,39 +150,33 @@ const ListWarehouse = () => {
 
                             {!loading && !error && !noData && (
                                 <table className="table table-bordered">
-                                    <thead className='table-secondary' style={{ width: '150px', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>
+                                    <thead className='table-secondary'>
                                         <tr>
-                                            <th>Organization ID</th>
-                                            <th>Organization Name </th>
-                                            <th>Owner Name </th>
-                                            <th>Location </th>
-                                            <th>Title</th>
-                                            <th>Description</th>
-                                            <th>Type </th>
+                                            <th>Customer Name</th>
+                                            <th>Customer Type</th>
+                                            <th>GST No</th>
+                                            <th>Phone No</th>
                                             <th>Status</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {
-                                            data.map((elm) => {
+                                            data.map((customer) => {
                                                 return (
-                                                    <tr key={elm.wareHouseId}>
-                                                        <td>{elm.organizationId}</td>
-                                                        <td>{elm.organizationName}</td>
-                                                        <td>{elm.ownerName}</td>
-                                                        <td>{elm.locationOrArea}</td>
-                                                        <td>{elm.title}</td>
-                                                        <td>{elm.description}</td>
-                                                        <td>{elm.type}</td>
+                                                    <tr key={customer.customerId}>
+                                                        <td>{customer.customerName}</td>
+                                                        <td>{customer.customerType}</td>
+                                                        <td>{customer.gst}</td>
+                                                        <td>{customer.phoneNo}</td>
                                                         <td>
                                                             <div className="form-check form-switch">
-                                                                <input onChange={() => changeStatus(elm.wareHouseId, elm.status)} className="form-check-input" checked={elm.status == "ACTIVE"} type="checkbox" role="switch" />
+                                                                <input onChange={() => changeStatus(customer.customerId, customer.status)} className="form-check-input" checked={customer.status == "ACTIVE"} type="checkbox" role="switch" />
                                                             </div>
                                                         </td>
                                                         <td className='tab'>
-                                                            <i onClick={() => (handleUpdate(elm.wareHouseId))} className="fa-solid fa-pen-to-square updel-icon"></i>
-                                                            <i onClick={() => handleDelete(elm.wareHouseId)} className="text-danger fa-solid fa-trash updel-icons"></i>
+                                                            <i onClick={() => (handleUpdate(customer.wareHouseId))} className="fa-solid fa-pen-to-square updel-icon"></i>
+                                                            <i onClick={() => handleDelete(customer.customerId)} className="text-danger fa-solid fa-trash updel-icons"></i>
                                                         </td>
                                                     </tr>
                                                 );
@@ -247,7 +187,7 @@ const ListWarehouse = () => {
                             )}
                         </div>
                         {/* Pagination */}
-                        {totalPages >= 1 && (
+                        {!search && (
                             <div className="d-flex justify-content-between align-items-center mt-4 mb-5">
                                 {/* Page size selector */}
                                 <div>
@@ -350,5 +290,4 @@ const ListWarehouse = () => {
     )
 }
 
-export default ListWarehouse
-
+export default ListCustomer

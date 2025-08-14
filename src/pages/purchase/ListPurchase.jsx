@@ -146,19 +146,25 @@ const ListPurchase = () => {
   const [error, setError] = useState("")
   const [noData, setNoData] = useState(false)
   const Navigate = useNavigate()
+  const [pageNumber, setPageNumber] = useState(1)
+  const [pageSize, setPageSize] = useState(10)
+  const [totalPages, setTotalPages] = useState(1)
 
   // listpurchase
-  const listpurchase = async () => {
+  const listpurchase = async (page = 1, size = pageSize) => {
     setLoading(true)
     setError("")
     setNoData(false)
 
     try {
-      const res = await getPurchaseData()
-      if (res.data.length === 0) {
+      const res = await getPurchaseData(page, size)
+      if (!res.data.data || res.data.data.length === 0) {
         setNoData(true)
+        setData([])
+        setTotalPages(1)
       } else {
-        setData(res.data)
+        setData(res.data.data)
+        setTotalPages(res.data.totalPages || 1)
       }
     } catch (err) {
       console.error(err)
@@ -174,10 +180,10 @@ const ListPurchase = () => {
     if (confirmDelete) {
       try {
         const res = await deletePurchaseData(id)
-        listpurchase()
+        listpurchase(pageNumber)
       } catch (err) {
         console.log(err)
-        setError("Unable to delete category.")
+        setError("Unable to delete product")
       }
     }
   }
@@ -187,7 +193,7 @@ const ListPurchase = () => {
     try {
       const res = await updatePurchaseStatus(id, status)
       console.log(status)
-      listpurchase()
+      listpurchase(pageNumber)
     }
     catch (err) {
       console.log(err);
@@ -210,6 +216,25 @@ const ListPurchase = () => {
       setError("Unable to fetch category details.")
     }
   }
+
+  // Handle page click
+  const handlePageChange = (newPage) => {
+    if (newPage < 1 || newPage > totalPages) return;
+    setPageNumber(newPage)
+    listpurchase(newPage)
+  }
+
+  // Change page size
+  const handlePageSizeChange = (e) => {
+    const newSize = parseInt(e.target.value)
+    setPageSize(newSize)
+    setPageNumber(1)
+    listpurchase(1, newSize)
+  }
+
+  useEffect(() => {
+    listpurchase(pageNumber)
+  }, [])
 
   return (
     <>
@@ -294,6 +319,104 @@ const ListPurchase = () => {
                 </table>
               )}
             </div>
+
+            {/* Pagination */}
+            {(
+              <div className="d-flex justify-content-between align-items-center mt-4 mb-5">
+                {/* Page size selector */}
+                <div>
+                  <label className="me-2">Show</label>
+                  <select value={pageSize} onChange={handlePageSizeChange} className="form-select d-inline-block w-auto">
+                    <option value={10}>10</option>
+                    <option value={20}>20</option>
+                    <option value={30}>30</option>
+                  </select>
+                  <span className="ms-2">entries</span>
+                </div>
+
+                {/* Page numbers center */}
+                <nav>
+                  <ul className="pagination mb-0 justify-content-center">
+                    {pageNumber > 2 && (
+                      <>
+                        <li className={`page-item ${pageNumber === 1 ? "active" : ""}`}>
+                          <button
+                            className="page-link"
+                            onClick={() => handlePageChange(1)}
+                          >
+                            1
+                          </button>
+                        </li>
+                        {pageNumber > 3 && (
+                          <li className="page-item disabled">
+                            <span className="page-link">...</span>
+                          </li>
+                        )}
+                      </>
+                    )}
+
+                    {/* Middle Pages */}
+                    {Array.from({ length: totalPages }, (_, i) => i + 1)
+                      .filter(
+                        num =>
+                          num === pageNumber || // current
+                          num === pageNumber - 1 || // prev
+                          num === pageNumber + 1 // next
+                      )
+                      .map(num => (
+                        <li
+                          key={num}
+                          className={`page-item ${pageNumber === num ? "active" : ""}`}
+                        >
+                          <button
+                            className="page-link"
+                            onClick={() => handlePageChange(num)}
+                          >
+                            {num}
+                          </button>
+                        </li>
+                      ))}
+
+                    {/* Last Page */}
+                    {pageNumber < totalPages - 1 && (
+                      <>
+                        {pageNumber < totalPages - 2 && (
+                          <li className="page-item disabled">
+                            <span className="page-link">...</span>
+                          </li>
+                        )}
+                        <li className={`page-item ${pageNumber === totalPages ? "active" : ""}`}>
+                          <button
+                            className="page-link"
+                            onClick={() => handlePageChange(totalPages)}
+                          >
+                            {totalPages}
+                          </button>
+                        </li>
+                      </>
+                    )}
+                  </ul>
+                </nav>
+
+                {/* Prev / Next right side */}
+                <div>
+                  <button
+                    className="btn btn-outline-primary me-2"
+                    disabled={pageNumber === 1}
+                    onClick={() => handlePageChange(pageNumber - 1)}
+                  >
+                    Previous
+                  </button>
+                  <button
+                    className="btn btn-outline-primary"
+                    disabled={pageNumber === totalPages}
+                    onClick={() => handlePageChange(pageNumber + 1)}
+                  >
+                    Next
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div >

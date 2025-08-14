@@ -9,6 +9,7 @@
     border: 0;
     border-radius: 5px;
     padding: 5px 10px;
+    transition: 0.3s ease-in-out;
 }
 
 .btn-form:hover {
@@ -57,6 +58,7 @@
     border-radius: 5px;
     padding: 5px 10px;
     margin-left: 14.9rem;
+    transition: 0.3s ease-in-out;
 }
 
 .btn-user:hover {

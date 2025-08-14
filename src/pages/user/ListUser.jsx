@@ -10,19 +10,25 @@ const ListUser = () => {
   const [error, setError] = useState("")
   const [noData, setNoData] = useState(false)
   const Navigate = useNavigate()
+  const [pageNumber, setPageNumber] = useState(1)
+  const [pageSize, setPageSize] = useState(2)
+  const [totalPages, setTotalPages] = useState(1)
 
   // list user 
-  const listUser = async () => {
+  const listUser = async (page = 1, size = pageSize) => {
     setLoading(true)
     setError("")
     setNoData(false)
 
     try {
-      const res = await getUserData()
-      if (res.data.length === 0) {
+      const res = await getUserData(page,size)
+      if (!res.data.data || res.data.data.length === 0) {
         setNoData(true)
+        setData([])
+        setTotalPages(1)
       } else {
-        setData(res.data)
+        setData(res.data.data)
+        setTotalPages(res.data.totalPages || 1)
       }
     } catch (err) {
       console.error(err)
@@ -37,7 +43,7 @@ const ListUser = () => {
     try {
       const res = updateUserStatus(id, status)
       console.log(status);
-      listUser()
+      listUser(pageNumber)
     } catch (err) {
       console.log("Error", err)
       setError("Unable to update status.")
@@ -79,7 +85,7 @@ const ListUser = () => {
     if (confirmData) {
       try {
         const res = await deleteUserData(id)
-        listUser()
+        listUser(pageNumber)
       } catch (err) {
         console.log("Error", err)
         setError("Unable to delete category.")
@@ -93,15 +99,31 @@ const ListUser = () => {
       const res = await getUserId(id)
       console.log(res.data);
       setId(res.data)
-      Navigate("/user/create", { state: res.data })
+      Navigate("/user/add", { state: res.data })
     }
     catch (err) {
       console.log(err)
       setError("Unable to fetch category details.")
     }
   }
+
+  // Handle page click
+  const handlePageChange = (newPage) => {
+    if (newPage < 1 || newPage > totalPages) return;
+    setPageNumber(newPage)
+    listUser(newPage)
+  }
+
+  // Change page size
+  const handlePageSizeChange = (e) => {
+    const newSize = parseInt(e.target.value)
+    setPageSize(newSize)
+    setPageNumber(1)
+    listUser(1, newSize)
+  }
+
   useEffect(() => {
-    listUser()
+    listUser(pageNumber)
   }, [])
 
   return (
@@ -124,7 +146,7 @@ const ListUser = () => {
                 />
                 <i className="fa-solid fa-magnifying-glass" id='user-search-icon'></i>
               </form>
-              <NavLink to="/user/create"><button className='btn-user'>+ Add User</button></NavLink>
+              <NavLink to="/user/add"><button className='btn-user'>+ Add User</button></NavLink>
             </nav>
             <div className='col-lg-12' id='list-scroll'>
               {loading && (
@@ -185,6 +207,103 @@ const ListUser = () => {
                 </table>
               )}
             </div>
+            {/* Pagination */}
+            {totalPages > 1 && (
+              <div className="d-flex justify-content-between align-items-center mt-4 mb-5">
+                {/* Page size selector */}
+                <div>
+                  <label className="me-2">Show</label>
+                  <select value={pageSize} onChange={handlePageSizeChange} className="form-select d-inline-block w-auto">
+                    <option value={10}>10</option>
+                    <option value={20}>20</option>
+                    <option value={30}>30</option>
+                  </select>
+                  <span className="ms-2">entries</span>
+                </div>
+
+                {/* Page numbers center */}
+                <nav>
+                  <ul className="pagination mb-0 justify-content-center">
+                    {pageNumber > 2 && (
+                      <>
+                        <li className={`page-item ${pageNumber === 1 ? "active" : ""}`}>
+                          <button
+                            className="page-link"
+                            onClick={() => handlePageChange(1)}
+                          >
+                            1
+                          </button>
+                        </li>
+                        {pageNumber > 3 && (
+                          <li className="page-item disabled">
+                            <span className="page-link">...</span>
+                          </li>
+                        )}
+                      </>
+                    )}
+
+                    {/* Middle Pages */}
+                    {Array.from({ length: totalPages }, (_, i) => i + 1)
+                      .filter(
+                        num =>
+                          num === pageNumber || // current
+                          num === pageNumber - 1 || // prev
+                          num === pageNumber + 1 // next
+                      )
+                      .map(num => (
+                        <li
+                          key={num}
+                          className={`page-item ${pageNumber === num ? "active" : ""}`}
+                        >
+                          <button
+                            className="page-link"
+                            onClick={() => handlePageChange(num)}
+                          >
+                            {num}
+                          </button>
+                        </li>
+                      ))}
+
+                    {/* Last Page */}
+                    {pageNumber < totalPages - 1 && (
+                      <>
+                        {pageNumber < totalPages - 2 && (
+                          <li className="page-item disabled">
+                            <span className="page-link">...</span>
+                          </li>
+                        )}
+                        <li className={`page-item ${pageNumber === totalPages ? "active" : ""}`}>
+                          <button
+                            className="page-link"
+                            onClick={() => handlePageChange(totalPages)}
+                          >
+                            {totalPages}
+                          </button>
+                        </li>
+                      </>
+                    )}
+                  </ul>
+                </nav>
+
+                {/* Prev / Next right side */}
+                <div>
+                  <button
+                    className="btn btn-outline-primary me-2"
+                    disabled={pageNumber === 1}
+                    onClick={() => handlePageChange(pageNumber - 1)}
+                  >
+                    Previous
+                  </button>
+                  <button
+                    className="btn btn-outline-primary"
+                    disabled={pageNumber === totalPages}
+                    onClick={() => handlePageChange(pageNumber + 1)}
+                  >
+                    Next
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

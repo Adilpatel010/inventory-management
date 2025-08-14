@@ -186,6 +186,8 @@ const AddSupplier = () => {
                                     type="text"
                                     className="form-control shadow-none border-2"
                                     name="phoneNumber"
+                                    pattern="[0-9]{10}"
+                                    maxLength={10}
                                     value={formData.phoneNumber}
                                     onChange={handleChange}
                                     placeholder="Phone"

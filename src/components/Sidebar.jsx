@@ -136,9 +136,9 @@ const Sidebar = () => {
                                 </NavLink>
 
                                 <ul className={`ware-show list unstyled ${isUserOpen ? 'show' : ''}`}>
-                                    <NavLink to="/user/create">
+                                    <NavLink to="/user/add">
                                         <li className={({ isActive }) => isActive ? 'link-active' : 'link'} id='link' >
-                                            <IoMdAdd className='sidebar-icon' /> Create User </li>
+                                            <IoMdAdd className='sidebar-icon' /> Add User </li>
                                     </NavLink>
 
                                     <NavLink to="/user/list">
@@ -161,9 +161,9 @@ const Sidebar = () => {
                                     </NavLink>
 
                                     <ul className={`ware-show list unstyled ${iscustomerOpen ? 'show' : ''}`}>
-                                        <NavLink to="/customer/create">
+                                        <NavLink to="/customer/add">
                                             <li className={({ isActive }) => isActive ? 'link-active' : 'link'} id='link' >
-                                                <IoMdAdd className='sidebar-icon' /> Create Customer </li>
+                                                <IoMdAdd className='sidebar-icon' /> Add Customer </li>
                                         </NavLink>
 
                                         <NavLink to="/customer/list">

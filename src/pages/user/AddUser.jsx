@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { registerUser, updateUserData } from '../../api/apifetcher';
 import { NavLink, useNavigate, useLocation } from 'react-router';
 
-const CreateUser = () => {
+const AddUser = () => {
 
   const { state } = useLocation();
   const [updateData, setUpdateData] = useState(false);
@@ -250,4 +250,4 @@ const CreateUser = () => {
   )
 }
 
-export default CreateUser
+export default AddUser

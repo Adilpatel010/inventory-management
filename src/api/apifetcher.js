@@ -18,9 +18,13 @@ api.interceptors.request.use((config) => {
 // --------------->> warehouse all api <<---------------
 
 // get warehouse
-export const getWarehouseData = () => {
-    return api.get("/WareHouse");
+export const getWarehouseData = (pageNumber, pageSize) => {
+    return api.get(`/WareHouse?pageNumber=${pageNumber}&pageSize=${pageSize}`);
 }
+
+// export const getWarehouseData = () => {
+//     return api.get("/WareHouse");
+// }
 
 // post warehouse
 export const addWarehouseData = (data) => {
@@ -60,9 +64,12 @@ export const getWarehouseId = (id) => {
 // --------------->> supplier all api <<---------------
 
 // get supplier
-export const getSupplierData = () => {
-    return api.get("/supplier")
+export const getSupplierData = (pageNumber, pageSize) => {
+    return api.get(`/supplier?pageNumber=${pageNumber}&pageSize=${pageSize}`)
 }
+// export const getSupplierData = () => {
+//     return api.get("/supplier")
+// }
 
 // change status supplier
 export const updateSupplierStatus = (id, status) => {
@@ -97,8 +104,8 @@ export const getSupplierId = (id) => {
 // --------------->> purchase all api <<---------------
 
 // get purchase
-export const getPurchaseData = () => {
-    return api.get("/purchase")
+export const getPurchaseData = (pageNumber, pageSize) => {
+    return api.get(`/purchase?pageNumber=${pageNumber}&pageSize=${pageSize}`)
 }
 
 // post purchase
@@ -129,9 +136,12 @@ export const getPurchaseId = (id) => {
 // ---------------->> Category all api <<-----------------
 
 // get category 
-export const getCategoryData = () => {
-    return api.get("/category")
+export const getCategoryData = (pageNumber, pageSize) => {
+    return api.get(`category?pageNumber=${pageNumber}&pageSize=${pageSize}`)
 }
+// export const getCategoryData = () => {
+//     return api.get("/category")
+// }
 
 // post category
 export const addCategoryData = (data) => {
@@ -171,9 +181,13 @@ export const getCategoryCount = () => {
 // ----------------->> Product all api <<--------------
 
 // get product
-export const getProductData = () => {
-    return api.get('/product')
+export const getProductData = (pageNumber, pageSize) => {
+    return api.get(`/product?pageNumber=${pageNumber}&pageSize=${pageSize}`)
 }
+
+// export const getProductData = (page = 1) => {
+//     return api.get(`/product?page=${page}`)
+// }
 
 // delete product
 export const deleteProductData = (id) => {
@@ -218,9 +232,13 @@ export const getUserCount = () => {
 }
 
 // get user
-export const getUserData = () => {
-    return api.get("/user")
+export const getUserData = (pageNumber, pageSize) => {
+    return api.get(`/user?pageNumber=${pageNumber}&pageSize=${pageSize}`)
 }
+
+// export const getUserData = () => {
+//     return api.get("/user")
+// }
 
 // create user 
 export const registerUser = (data) => {
@@ -262,6 +280,22 @@ export const loginUser = (data) => {
 // ----------------->> Sales/customer all api <<--------------
 
 // get customer
-export const getCustomerData=()=>{
-    return api.get("/Customer")
+export const getCustomerData = (pageNumber, pageSize) => {
+    return api.get(`/customer?pageNumber=${pageNumber}&pageSize=${pageSize}`)
 }
+
+// change status 
+export const updateCustomerStatus = (id, status) => {
+    return api.patch(`/customer/${id}/${status == "ACTIVE" ? "INACTIVE" : "ACTIVE"}`)
+}
+
+// search customer
+export const searchCustomerData = (search) => {
+    return api.get(`/customer/search?search=${search}`)
+}
+
+// delete customer
+export const deleteCustomerData=(id)=>{
+    return api.delete(`/customer/${id}`)
+}
+// post customer
