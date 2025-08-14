@@ -201,7 +201,7 @@ const ListSupplier = () => {
                         </div>
                         
                     {/* Pagination */}
-                    {!search && totalPages > 1 && (
+                    {!search && totalPages >= 1 && (
                         <div className="d-flex justify-content-between align-items-center mt-4 mb-5">
                             {/* Page size selector */}
                             <div>

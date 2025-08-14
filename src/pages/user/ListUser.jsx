@@ -11,9 +11,10 @@ const ListUser = () => {
   const [noData, setNoData] = useState(false)
   const Navigate = useNavigate()
   const [pageNumber, setPageNumber] = useState(1)
-  const [pageSize, setPageSize] = useState(2)
+  const [pageSize, setPageSize] = useState(10)
   const [totalPages, setTotalPages] = useState(1)
 
+  
   // list user 
   const listUser = async (page = 1, size = pageSize) => {
     setLoading(true)
@@ -208,7 +209,7 @@ const ListUser = () => {
               )}
             </div>
             {/* Pagination */}
-            {totalPages > 1 && (
+            {!search && totalPages >= 1 (
               <div className="d-flex justify-content-between align-items-center mt-4 mb-5">
                 {/* Page size selector */}
                 <div>

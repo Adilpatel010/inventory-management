@@ -17,7 +17,7 @@ const ListCategory = () => {
     const [noData, setNoData] = useState(false)
     const navigate = useNavigate()
     const [pageNumber, setPageNumber] = useState(1)
-    const [pageSize, setPageSize] = useState(1)
+    const [pageSize, setPageSize] = useState(10)
     const [totalPages, setTotalPages] = useState(1)
 
     // List Category
@@ -202,7 +202,7 @@ const ListCategory = () => {
                     </div>
 
                     {/* Pagination */}
-                    {totalPages >= 1 && (
+                    {!search && totalPages >= 1 && (
                         <div className="d-flex justify-content-between align-items-center mt-4 mb-5">
                             {/* Page size selector */}
                             <div>

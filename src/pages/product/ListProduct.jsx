@@ -421,7 +421,7 @@ const ListProduct = () => {
                         </div>
 
                     {/* Pagination */}
-                    {(
+                    {!search && (
                         <div className="d-flex justify-content-between align-items-center mt-4 mb-5">
                             {/* Page size selector */}
                             <div>
