@@ -7,7 +7,6 @@ import { MdMenuOpen } from "react-icons/md";
 import { MdOutlineMenu } from "react-icons/md";
 import { MyContext } from '../App';
 
-
 const Header = () => {
 
     const context = useContext(MyContext)
