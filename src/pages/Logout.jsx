@@ -47,7 +47,7 @@ const Logout = () => {
                     text: "You have been successfully logged out.",
                     icon: "success",
                     width: '410px',
-                    timer: 1500,
+                    timer: 1200,
                     showConfirmButton: false,
                     heightAuto: false
                 }).then(() => {

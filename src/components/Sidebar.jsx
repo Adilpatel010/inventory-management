@@ -26,6 +26,7 @@ const Sidebar = () => {
     const [isUserOpen, setIsUserOpen] = useState(false);
     const [isSalesOpen, setIsSalesOpen] = useState(false)
     const [iscustomerOpen, setIsCustomerOpen] = useState(false)
+    const [isSalesInfoOpen, setIsSalesInfoOpen] = useState(false)
 
     const toggleWare = () => setIsWareOpen(!isWareOpen);
     const toggleSupplier = () => setIsSupplierOpen(!isSupplierOpen);
@@ -35,6 +36,7 @@ const Sidebar = () => {
     const toggleUser = () => setIsUserOpen(!isUserOpen);
     const toggleSales = () => setIsSalesOpen(!isSalesOpen);
     const toggleCustomer = () => setIsCustomerOpen(!iscustomerOpen);
+    const toggleSalesInfo = () => setIsSalesInfoOpen(!isSalesInfoOpen)
 
     return (
         <div>
@@ -172,15 +174,31 @@ const Sidebar = () => {
                                         </NavLink>
                                     </ul>
 
-                                    <NavLink to="/sales/order">
-                                        <li className={({ isActive }) => isActive ? 'link-active' : 'link'} id='link'>
-                                            <MdFormatListBulleted className='sidebar-icon' /> Sales Order </li>
-                                    </NavLink>
+                                    <ul className={`ware-show list unstyled ${isSalesOpen ? 'show' : ''}`}>
+                                        <NavLink to="/sa">
+                                            <li onClick={toggleSalesInfo} className={({ isActive }) => isActive ? 'link-active' : 'link'} id='link'>
+                                                <MdFormatListBulleted className='sidebar-icon' /> Sales Order
+                                                <span className={`fa-solid ${isSalesInfoOpen ? 'fa-angle-up' : 'fa-angle-down'}`}></span>
+                                            </li>
+                                        </NavLink>
 
-                                    <NavLink to="/sales/item">
-                                        <li className={({ isActive }) => isActive ? 'link-active' : 'link'} id='link'>
-                                            <RiAlignItemBottomLine className='sidebar-icon' /> Sales Item </li>
-                                    </NavLink>
+                                        <ul className={`ware-show list unstyled ${isSalesInfoOpen ? 'show' : ''}`}>
+                                            <NavLink to="/sales/add">
+                                                <li className={({ isActive }) => isActive ? 'link-active' : 'link'} id='link' >
+                                                    <IoMdAdd className='sidebar-icon' /> Add Sales </li>
+                                            </NavLink>
+
+                                            <NavLink to="/sales/list">
+                                                <li className={({ isActive }) => isActive ? 'link active' : 'link'} id='link'>
+                                                    <MdFormatListBulleted className='sidebar-icon' /> List Sales</li>
+                                            </NavLink>
+                                        </ul>
+
+                                        <NavLink to="/sales/item">
+                                            <li className={({ isActive }) => isActive ? 'link-active' : 'link'} id='link'>
+                                                <RiAlignItemBottomLine className='sidebar-icon' /> Sales Item </li>
+                                        </NavLink>
+                                    </ul>
                                 </ul>
 
                                 <NavLink to="/organization">

@@ -31,7 +31,7 @@ export const addWarehouseData = (data) => {
     return api.post("/WareHouse/register", data)
 }
 
-// status change warehouse
+// change status warehouse
 export const updateWarehouseStatus = (id, status) => {
     return api.patch(`/WareHouse/${id}/${status == "ACTIVE" ? "INACTIVE" : "ACTIVE"}`)
 }
@@ -295,7 +295,23 @@ export const searchCustomerData = (search) => {
 }
 
 // delete customer
-export const deleteCustomerData=(id)=>{
+export const deleteCustomerData = (id) => {
     return api.delete(`/customer/${id}`)
 }
+
+// get customerid
+export const getCustomerId = (id) => {
+    return api.get(`/customer/${id}`)
+}
+
 // post customer
+export const addCustomerData = (data) => {
+    return api.post("/customer/create", data)
+}
+
+// update customer
+export const updateCustomerData = (id, data) => {
+    return api.put(`/customer/${id}`, data)
+}
+
+// ----------------->> Sales/Sales order all api <<--------------

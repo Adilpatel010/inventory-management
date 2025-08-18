@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react'
-import { deleteCustomerData, getCustomerData, searchCustomerData, updateCustomerStatus } from '../../../api/apifetcher'
-import { NavLink } from 'react-router'
+import { deleteCustomerData, getCustomerData, getCustomerId, searchCustomerData, updateCustomerStatus } from '../../../api/apifetcher'
+import { NavLink, useNavigate } from 'react-router'
 
 const ListCustomer = () => {
 
     const [data, setData] = useState([])
     const [search, setSearch] = useState("")
+    const [id, setId] = useState("")
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState("")
     const [noData, setNoData] = useState(false)
+    const Navigate = useNavigate()
     const [pageNumber, setPageNumber] = useState(1)
     const [pageSize, setPageSize] = useState(10)
     const [totalPages, setTotalPages] = useState(1)
@@ -21,7 +23,7 @@ const ListCustomer = () => {
 
         try {
             const res = await getCustomerData(page, size)
-            console.log(res)
+            // console.log(res)
             if (!res.data.data.data || res.data.data.data.length === 0) {
                 setNoData(true)
                 setData([])
@@ -29,7 +31,7 @@ const ListCustomer = () => {
             } else {
                 setTotalPages(res.data.data.totalPages || 1)
                 setData(res.data.data.data)
-                console.log(res.data.data.data)
+                // console.log(res.data.data.data)
             }
         } catch (err) {
             console.error(err)
@@ -53,18 +55,30 @@ const ListCustomer = () => {
 
     // delete customer
     const handleDelete = async (id) => {
-        const confirmData = window.confirm("Are you sure to delete this category?")
+        const confirmData = window.confirm("Are you sure to delete this customer?")
         if (confirmData) {
             try {
                 const res = await deleteCustomerData(id)
                 listCustomer(pageNumber)
             } catch (err) {
                 console.error(err)
-                setError("Unable to delete category.")
+                setError("Unable to delete customer.")
             }
         }
     }
 
+    // update data to navigate 
+    const handleUpdate = async (id) => {
+        try {
+            const res = await getCustomerId(id)
+            console.log(res.data.data);
+            setId(res.data.data)
+            Navigate("/customer/add", { state: res.data.data })
+        }
+        catch (err) {
+            console.log(err)
+        }
+    }
     // search customer
     const handleSearch = async (e) => {
         const value = e.target.value
@@ -114,16 +128,14 @@ const ListCustomer = () => {
         listCustomer(pageNumber)
     }, [])
 
-    console.log(totalPages)
-
     return (
         <>
             <div className="container-fluid font">
                 <div className="row justify-content-center">
                     <div className="col-lg-11">
                         <nav className="navbar sticky-top navbar-expand-lg navbar-light d-flex align-items-center justify-content-between" style={{ backgroundColor: '#f1f1f1', height: "80px" }}>
-                            <h3 className='mt-2'>Category List</h3>
-                            <form className="d-flex" role="search" id="category-search">
+                            <h3 className='mt-2'>Customer List</h3>
+                            <form className="d-flex" role="search" id="customer-search">
                                 <input
                                     className="form-control shadow-none border-2 me-2"
                                     type="search"
@@ -132,9 +144,9 @@ const ListCustomer = () => {
                                     value={search}
                                     onChange={handleSearch}
                                 />
-                                <i className="fa-solid fa-magnifying-glass" id='category-search-icon'></i>
+                                <i className="fa-solid fa-magnifying-glass" id='customer-search-icon'></i>
                             </form>
-                            <NavLink to="/customer/add"><button className='btn-category'>+ Add Category</button></NavLink>
+                            <NavLink to="/customer/add"><button className='btn-customer'>+ Add Customer</button></NavLink>
                         </nav>
 
                         <div className='col-lg-12' style={{ overflowX: "auto" }}>
@@ -175,7 +187,7 @@ const ListCustomer = () => {
                                                             </div>
                                                         </td>
                                                         <td className='tab'>
-                                                            <i onClick={() => (handleUpdate(customer.wareHouseId))} className="fa-solid fa-pen-to-square updel-icon"></i>
+                                                            <i onClick={() => handleUpdate(customer.customerId)} className="fa-solid fa-pen-to-square updel-icon"></i>
                                                             <i onClick={() => handleDelete(customer.customerId)} className="text-danger fa-solid fa-trash updel-icons"></i>
                                                         </td>
                                                     </tr>

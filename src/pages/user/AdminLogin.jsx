@@ -155,7 +155,7 @@ const Login = () => {
                     confirmButtonColor: "#3085d6",
                     confirmButtonText: "OK",
                     width: '410px',
-                    timer: 1700,
+                    timer: 1200,
                     timerProgressBar: true
                 }).then(() => {
                     navigate('/dashboard');

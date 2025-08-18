@@ -30,6 +30,8 @@ import ProtectedRoute from './components/ProtectedRoute'
 import Logout from './pages/Logout'
 import AddCustomer from './pages/sales/customer/Addcustomer'
 import ListCustomer from './pages/sales/customer/Listcustomer'
+import AddSales from './pages/sales/salesinfo/AddSales'
+import ListSales from './pages/sales/salesinfo/ListSales'
 
 
 const MyContext = createContext();
@@ -98,6 +100,10 @@ function App() {
                   element={<ProtectedRoute><AddCustomer /></ProtectedRoute>} />
                 <Route path='/customer/list'
                   element={<ProtectedRoute><ListCustomer /></ProtectedRoute>} />
+                <Route path='/sales/add'
+                  element={<ProtectedRoute><AddSales /></ProtectedRoute>} />
+                <Route path='/sales/list'
+                  element={<ProtectedRoute><ListSales /></ProtectedRoute>} />
                 <Route path='/logout'
                   element={<ProtectedRoute><Logout /></ProtectedRoute>} />
               </Routes>
