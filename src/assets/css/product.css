@@ -68,3 +68,14 @@
     border-radius: 5px;
     padding: 5px 10px;
 }
+
+.add-icon {
+    background-color: #007bff;
+    color: white;
+    margin-right: 5px;
+    color: white;
+    font-size: 35px;
+    padding: 8px;
+    border-radius: 5px;
+    cursor: pointer;
+}

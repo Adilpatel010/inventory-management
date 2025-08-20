@@ -54,10 +54,11 @@ const ListUser = () => {
   // search user
   const handleSearch = async (e) => {
     const value = e.target.value;
-    setSearch(value)
+    setSearch(value);
 
-    if (value.trim() == "") {
-      listUser()
+    if (value.trim() === "") {
+      setPageNumber(1);
+      listUser(1, pageSize)
       return;
     }
     setLoading(true)
@@ -66,11 +67,13 @@ const ListUser = () => {
 
     try {
       const res = await searchUserData(value)
-      if (res.data.length === 0) {
+      if (!res.data || res.data.length === 0) {
         setNoData(true)
         setData([])
+        setTotalPages(1)
       } else {
         setData(res.data)
+        setPageNumber(1)
       }
     } catch (err) {
       console.error("Search Error:", err)

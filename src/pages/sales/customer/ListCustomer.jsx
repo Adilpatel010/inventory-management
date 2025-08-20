@@ -85,7 +85,8 @@ const ListCustomer = () => {
         setSearch(value)
 
         if (value.trim() === "") {
-            listCustomer(pageNumber)
+            setPageNumber(1);
+            listCustomer(1, pageSize)
             return
         }
         setLoading(true)

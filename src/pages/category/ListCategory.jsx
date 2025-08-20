@@ -71,16 +71,18 @@ const ListCategory = () => {
 
     // Search Category
     const handleSearch = async (e) => {
-        const value = e.target.value
-        setSearch(value)
+        const value = e.target.value;
+        setSearch(value);
 
         if (value.trim() === "") {
-            listCategory(pageNumber)
-            return
+            setPageNumber(1);
+            listCategory(1, pageSize)
+            return;
         }
         setLoading(true)
         setError("")
         setNoData(false)
+
         try {
             const res = await searchCategoryData(value)
             if (!res.data || res.data.length === 0) {
@@ -89,7 +91,7 @@ const ListCategory = () => {
                 setTotalPages(1)
             } else {
                 setData(res.data)
-                setTotalPages(1)
+                setPageNumber(1)
             }
         } catch (err) {
             console.error("Search Error:", err)

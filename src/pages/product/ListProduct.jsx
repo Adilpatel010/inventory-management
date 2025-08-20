@@ -208,11 +208,11 @@ const ListProduct = () => {
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState("")
     const [noData, setNoData] = useState(false)
-     const Navigate = useNavigate()
+    const Navigate = useNavigate()
     const [pageNumber, setPageNumber] = useState(1)
     const [pageSize, setPageSize] = useState(10)
     const [totalPages, setTotalPages] = useState(1)
-   
+
 
     // list product 
     const ListProduct = async (page = 1, size = pageSize) => {
@@ -266,10 +266,12 @@ const ListProduct = () => {
     // search product
     const handleSearch = async (e) => {
         const value = e.target.value;
-        setSearch(value)
+        setSearch(value);
+
         if (value.trim() === "") {
-            ListProduct(pageNumber)
-            return
+            setPageNumber(1);
+            ListProduct(1, pageSize)
+            return;
         }
         setLoading(true)
         setError("")
@@ -280,10 +282,10 @@ const ListProduct = () => {
             if (!res.data || res.data.length === 0) {
                 setNoData(true)
                 setData([])
-                setTotalPages(1)
+                setTotalPages(1)   
             } else {
                 setData(res.data)
-                setTotalPages(1)
+                setPageNumber(1) 
             }
         } catch (err) {
             console.error("Search Error:", err)
@@ -325,100 +327,91 @@ const ListProduct = () => {
     }, [])
 
     return (
-         <div className="container-fluid font">
-                <div className="row justify-content-center">
-                    <div className="col-lg-11">
-                        <nav className="navbar sticky-top navbar-expand-lg navbar-light d-flex align-items-center justify-content-between" style={{ backgroundColor: '#f1f1f1', height: "80px" }}>
-                            <h3 className='mt-2'>Product List</h3>
-                            <form className="d-flex" role="search" id="product-search" onSubmit={e => e.preventDefault()}>
-                                <input
-                                    className="form-control me-2 shadow-none border-2"
-                                    type="search"
-                                    id='product-search-in'
-                                    placeholder="Search"
-                                    aria-label="Search"
-                                    value={search}
-                                    onChange={handleSearch}
-                                />
-                                <i className="fa-solid fa-magnifying-glass" id='product-search-icon'></i>
-                            </form>
-                            <NavLink to="/product/add"><button className='btn-product'>+ Add Product</button></NavLink>
-                        </nav>
-                        <div className='col-lg-12' id='list-scroll'>
-                            {loading && (
-                                <div className="text-center p-3">
-                                    <div className="spinner-border text-secondary" role="status">
-                                        <span className="visually-hidden">Loading...</span>
-                                    </div>
+        <div className="container-fluid font">
+            <div className="row justify-content-center">
+                <div className="col-lg-11">
+                    <nav className="navbar sticky-top navbar-expand-lg navbar-light d-flex align-items-center justify-content-between" style={{ backgroundColor: '#f1f1f1', height: "80px" }}>
+                        <h3 className='mt-2'>Product List</h3>
+                        <form className="d-flex" role="search" id="product-search" onSubmit={e => e.preventDefault()}>
+                            <input
+                                className="form-control me-2 shadow-none border-2"
+                                type="search"
+                                id='product-search-in'
+                                placeholder="Search"
+                                aria-label="Search"
+                                value={search}
+                                onChange={handleSearch}
+                            />
+                            <i className="fa-solid fa-magnifying-glass" id='product-search-icon'></i>
+                        </form>
+                        <NavLink to="/product/add"><button className='btn-product'>+ Add Product</button></NavLink>
+                    </nav>
+                    <div className='col-lg-12' id='list-scroll'>
+                        {loading && (
+                            <div className="text-center p-3">
+                                <div className="spinner-border text-secondary" role="status">
+                                    <span className="visually-hidden">Loading...</span>
                                 </div>
-                            )}
-                            {error && <p className="text-danger text-center p-3">{error}</p>}
-                            {noData && !loading && !error && <p className="text-center p-3">No Data Found</p>}
+                            </div>
+                        )}
+                        {error && <p className="text-danger text-center p-3">{error}</p>}
+                        {noData && !loading && !error && <p className="text-center p-3">No Data Found</p>}
 
-                            {!loading && !error && !noData && (
-                                <>
-                                    <table className="table table-bordered" style={{ width: '150px', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>
-                                        <thead className='table-secondary'>
-                                            <tr>
+                        {!loading && !error && !noData && (
+                            <>
+                                <table className="table table-bordered" style={{ width: '150px', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>
+                                    <thead className='table-secondary'>
+                                        <tr>
 
-                                                <th>Organization ID</th>
-                                                <th>Category ID</th>
-                                                <th>Category Name</th>
-                                                <th>Supplier ID</th>
-                                                <th>Supplier Name</th>
-                                                <th>Warehouse ID</th>
-                                                <th>Location or Area</th>
-                                                <th>Title</th>
-                                                 <th>Type</th>
-                                                <th>Product Name</th>
-                                               
-                                                <th>Product Code</th>
-                                                <th>Product Image</th>
-                                                <th>Stock </th>
-                                                <th>Description </th>
-                                                <th>Status</th>
-                                                <th>Action</th>
+                                            <th>Organization ID</th>
+                                            <th>Category ID</th>
+                                            <th>Category Name</th>
+                                            <th>Supplier ID</th>
+                                            <th>Supplier Name</th>
+                                            <th>Product Name</th>
+                                            <th>Product Code</th>
+                                            <th>Product Image</th>
+                                            <th>Stock </th>
+                                            <th>Description </th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {data.map((product) => (
+                                            <tr key={product.productId}>
+                                                <td>{product.organizationId}</td>
+                                                <td>{product.categoryId}</td>
+                                                <td>{product.categoryName}</td>
+                                                <td>{product.supplierId}</td>
+                                                <td>{product.supplierName}</td>
+                                                <td>{product.productName}</td>
+                                                <td>{product.productCode}</td>
+                                                <td>{product.productImage}</td>
+                                                <td>{product.stock}</td>
+                                                <td>{product.description}</td>
+                                                <td>
+                                                    <div className="form-check form-switch">
+                                                        <input
+                                                            onChange={() => changeStatus(product.productId, product.status)}
+                                                            checked={product.status === "ACTIVE"}
+                                                            className="form-check-input"
+                                                            type="checkbox"
+                                                            role="switch"
+                                                        />
+                                                    </div>
+                                                </td>
+                                                <td className='tab'>
+                                                    <i onClick={() => handleUpdate(product.productId)} className="fa-solid fa-pen-to-square updel-icon"></i>
+                                                    <i onClick={() => handleDelete(product.productId)} className="text-danger fa-solid fa-trash updel-icons"></i>
+                                                </td>
                                             </tr>
-                                        </thead>
-                                        <tbody>
-                                            {data.map((product) => (
-                                                <tr key={product.productId}>
-                                                    <td>{product.organizationId}</td>
-                                                    <td>{product.categoryId}</td>
-                                                    <td>{product.categoryName}</td>
-                                                    <td>{product.supplierId}</td>
-                                                    <td>{product.supplierName}</td>
-                                                    <td>{product.wareHouseId}</td>
-                                                    <td>{product.locationOrArea}</td>
-                                                    <td>{product.title}</td>
-                                                    <td>{product.type}</td>
-                                                    <td>{product.productName}</td>
-                                                    <td>{product.productCode}</td>
-                                                    <td>{product.productImage}</td>
-                                                    <td>{product.stock}</td>
-                                                    <td>{product.description}</td>
-                                                    <td>
-                                                        <div className="form-check form-switch">
-                                                            <input
-                                                                onChange={() => changeStatus(product.productId, product.status)}
-                                                                checked={product.status === "ACTIVE"}
-                                                                className="form-check-input"
-                                                                type="checkbox"
-                                                                role="switch"
-                                                            />
-                                                        </div>
-                                                    </td>
-                                                    <td className='tab'>
-                                                        <i onClick={() => handleUpdate(product.productId)} className="fa-solid fa-pen-to-square updel-icon"></i>
-                                                        <i onClick={() => handleDelete(product.productId)} className="text-danger fa-solid fa-trash updel-icons"></i>
-                                                    </td>
-                                                </tr>
-                                            ))}
-                                        </tbody>
-                                    </table>
-                                </>
-                            )}
-                        </div>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </>
+                        )}
+                    </div>
 
                     {/* Pagination */}
                     {!search && (
@@ -437,54 +430,54 @@ const ListProduct = () => {
                             {/* Page numbers center */}
                             <nav>
                                 <ul className="pagination mb-0 justify-content-center">
-                                     {pageNumber > 2 && (
-                                       <>
-                                             <li className={`page-item ${pageNumber === 1 ? "active" : ""}`}>
-                                                 <button
-                                                     className="page-link"
-                                                     onClick={() => handlePageChange(1)}
-                                                 >
-                                                     1
-                                                </button>
-                                             </li>
-                                             {pageNumber > 3 && (
-                                              <li className="page-item disabled">
-                                                    <span className="page-link">...</span>
-                                               </li>
-                                             )}
-                                         </>
-                                     )}
-
-                                     {/* Middle Pages */}
-                                     {Array.from({ length: totalPages }, (_, i) => i + 1)
-                                         .filter(
-                                             num =>
-                                                 num === pageNumber || // current
-                                                 num === pageNumber - 1 || // prev
-                                                 num === pageNumber + 1 // next
-                                         )
-                                         .map(num => (
-                                             <li
-                                                 key={num}
-                                                 className={`page-item ${pageNumber === num ? "active" : ""}`}
-                                             >
-                                                 <button
-                                                     className="page-link"
-                                                     onClick={() => handlePageChange(num)}
-                                               >
-                                                     {num}
+                                    {pageNumber > 2 && (
+                                        <>
+                                            <li className={`page-item ${pageNumber === 1 ? "active" : ""}`}>
+                                                <button
+                                                    className="page-link"
+                                                    onClick={() => handlePageChange(1)}
+                                                >
+                                                    1
                                                 </button>
                                             </li>
-                                       ))}
+                                            {pageNumber > 3 && (
+                                                <li className="page-item disabled">
+                                                    <span className="page-link">...</span>
+                                                </li>
+                                            )}
+                                        </>
+                                    )}
+
+                                    {/* Middle Pages */}
+                                    {Array.from({ length: totalPages }, (_, i) => i + 1)
+                                        .filter(
+                                            num =>
+                                                num === pageNumber || // current
+                                                num === pageNumber - 1 || // prev
+                                                num === pageNumber + 1 // next
+                                        )
+                                        .map(num => (
+                                            <li
+                                                key={num}
+                                                className={`page-item ${pageNumber === num ? "active" : ""}`}
+                                            >
+                                                <button
+                                                    className="page-link"
+                                                    onClick={() => handlePageChange(num)}
+                                                >
+                                                    {num}
+                                                </button>
+                                            </li>
+                                        ))}
 
                                     {/* Last Page */}
                                     {pageNumber < totalPages - 1 && (
-                                         <>
-                                         {pageNumber < totalPages - 2 && (
-                                                 <li className="page-item disabled">
-                                                     <span className="page-link">...</span>
-                                                 </li>
-                                             )}
+                                        <>
+                                            {pageNumber < totalPages - 2 && (
+                                                <li className="page-item disabled">
+                                                    <span className="page-link">...</span>
+                                                </li>
+                                            )}
                                             <li className={`page-item ${pageNumber === totalPages ? "active" : ""}`}>
                                                 <button
                                                     className="page-link"
@@ -494,7 +487,7 @@ const ListProduct = () => {
                                                 </button>
                                             </li>
                                         </>
-                                     )}
+                                    )}
                                 </ul>
                             </nav>
 

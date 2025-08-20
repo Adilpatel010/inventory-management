@@ -112,7 +112,8 @@ const ListWarehouse = () => {
         setSearch(value);
 
         if (value.trim() === "") {
-            listWarehouse();
+            setPageNumber(1);
+            listWarehouse(1, pageSize)
             return;
         }
         setLoading(true)
@@ -120,14 +121,14 @@ const ListWarehouse = () => {
         setNoData(false)
 
         try {
-            const res = await searchWarehouseData(value);
+            const res = await searchWarehouseData(value)
             if (!res.data || res.data.length === 0) {
                 setNoData(true)
                 setData([])
                 setTotalPages(1)
             } else {
                 setData(res.data)
-                setTotalPages(1)
+                setPageNumber(1)
             }
         } catch (err) {
             console.error("Search Error:", err)

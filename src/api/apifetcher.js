@@ -255,7 +255,7 @@ export const updateUserData = (id, data) => {
     return api.put(`/user/${id}`, data)
 }
 
-// get userId
+// get user by id
 export const getUserId = (id) => {
     return api.get(`/user/${id}`)
 }
@@ -299,7 +299,7 @@ export const deleteCustomerData = (id) => {
     return api.delete(`/customer/${id}`)
 }
 
-// get customerid
+// get customer by id
 export const getCustomerId = (id) => {
     return api.get(`/customer/${id}`)
 }
@@ -315,3 +315,5 @@ export const updateCustomerData = (id, data) => {
 }
 
 // ----------------->> Sales/Sales order all api <<--------------
+
+// get sales order

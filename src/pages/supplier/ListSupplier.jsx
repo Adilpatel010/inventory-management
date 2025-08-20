@@ -73,6 +73,11 @@ const ListSupplier = () => {
         const value = e.target.value
         setSearch(value)
 
+        if (value.trim() === "") {
+            setPageNumber(1);
+            listSupplier(1, pageSize)
+            return;
+        }
         setLoading(true)
         setError("")
         setNoData(false)
@@ -199,104 +204,104 @@ const ListSupplier = () => {
                                 </table>
                             )}
                         </div>
-                        
-                    {/* Pagination */}
-                    {!search && totalPages >= 1 && (
-                        <div className="d-flex justify-content-between align-items-center mt-4 mb-5">
-                            {/* Page size selector */}
-                            <div>
-                                <label className="me-2">Show</label>
-                                <select value={pageSize} onChange={handlePageSizeChange} className="form-select d-inline-block w-auto">
-                                    <option value={10}>10</option>
-                                    <option value={20}>20</option>
-                                    <option value={30}>30</option>
-                                </select>
-                                <span className="ms-2">entries</span>
-                            </div>
 
-                            {/* Page numbers center */}
-                            <nav>
-                                <ul className="pagination mb-0 justify-content-center">
-                                     {pageNumber > 2 && (
-                                       <>
-                                             <li className={`page-item ${pageNumber === 1 ? "active" : ""}`}>
-                                                 <button
-                                                     className="page-link"
-                                                     onClick={() => handlePageChange(1)}
-                                                 >
-                                                     1
-                                                </button>
-                                             </li>
-                                             {pageNumber > 3 && (
-                                              <li className="page-item disabled">
-                                                    <span className="page-link">...</span>
-                                               </li>
-                                             )}
-                                         </>
-                                     )}
+                        {/* Pagination */}
+                        {!search && totalPages >= 1 && (
+                            <div className="d-flex justify-content-between align-items-center mt-4 mb-5">
+                                {/* Page size selector */}
+                                <div>
+                                    <label className="me-2">Show</label>
+                                    <select value={pageSize} onChange={handlePageSizeChange} className="form-select d-inline-block w-auto">
+                                        <option value={10}>10</option>
+                                        <option value={20}>20</option>
+                                        <option value={30}>30</option>
+                                    </select>
+                                    <span className="ms-2">entries</span>
+                                </div>
 
-                                     {/* Middle Pages */}
-                                     {Array.from({ length: totalPages }, (_, i) => i + 1)
-                                         .filter(
-                                             num =>
-                                                 num === pageNumber || // current
-                                                 num === pageNumber - 1 || // prev
-                                                 num === pageNumber + 1 // next
-                                         )
-                                         .map(num => (
-                                             <li
-                                                 key={num}
-                                                 className={`page-item ${pageNumber === num ? "active" : ""}`}
-                                             >
-                                                 <button
-                                                     className="page-link"
-                                                     onClick={() => handlePageChange(num)}
-                                               >
-                                                     {num}
-                                                </button>
-                                            </li>
-                                       ))}
+                                {/* Page numbers center */}
+                                <nav>
+                                    <ul className="pagination mb-0 justify-content-center">
+                                        {pageNumber > 2 && (
+                                            <>
+                                                <li className={`page-item ${pageNumber === 1 ? "active" : ""}`}>
+                                                    <button
+                                                        className="page-link"
+                                                        onClick={() => handlePageChange(1)}
+                                                    >
+                                                        1
+                                                    </button>
+                                                </li>
+                                                {pageNumber > 3 && (
+                                                    <li className="page-item disabled">
+                                                        <span className="page-link">...</span>
+                                                    </li>
+                                                )}
+                                            </>
+                                        )}
 
-                                    {/* Last Page */}
-                                    {pageNumber < totalPages - 1 && (
-                                         <>
-                                         {pageNumber < totalPages - 2 && (
-                                                 <li className="page-item disabled">
-                                                     <span className="page-link">...</span>
-                                                 </li>
-                                             )}
-                                            <li className={`page-item ${pageNumber === totalPages ? "active" : ""}`}>
-                                                <button
-                                                    className="page-link"
-                                                    onClick={() => handlePageChange(totalPages)}
+                                        {/* Middle Pages */}
+                                        {Array.from({ length: totalPages }, (_, i) => i + 1)
+                                            .filter(
+                                                num =>
+                                                    num === pageNumber || // current
+                                                    num === pageNumber - 1 || // prev
+                                                    num === pageNumber + 1 // next
+                                            )
+                                            .map(num => (
+                                                <li
+                                                    key={num}
+                                                    className={`page-item ${pageNumber === num ? "active" : ""}`}
                                                 >
-                                                    {totalPages}
-                                                </button>
-                                            </li>
-                                        </>
-                                     )}
-                                </ul>
-                            </nav>
+                                                    <button
+                                                        className="page-link"
+                                                        onClick={() => handlePageChange(num)}
+                                                    >
+                                                        {num}
+                                                    </button>
+                                                </li>
+                                            ))}
 
-                            {/* Prev / Next right side */}
-                            <div>
-                                <button
-                                    className="btn btn-outline-primary me-2"
-                                    disabled={pageNumber === 1}
-                                    onClick={() => handlePageChange(pageNumber - 1)}
-                                >
-                                    Previous
-                                </button>
-                                <button
-                                    className="btn btn-outline-primary"
-                                    disabled={pageNumber === totalPages}
-                                    onClick={() => handlePageChange(pageNumber + 1)}
-                                >
-                                    Next
-                                </button>
+                                        {/* Last Page */}
+                                        {pageNumber < totalPages - 1 && (
+                                            <>
+                                                {pageNumber < totalPages - 2 && (
+                                                    <li className="page-item disabled">
+                                                        <span className="page-link">...</span>
+                                                    </li>
+                                                )}
+                                                <li className={`page-item ${pageNumber === totalPages ? "active" : ""}`}>
+                                                    <button
+                                                        className="page-link"
+                                                        onClick={() => handlePageChange(totalPages)}
+                                                    >
+                                                        {totalPages}
+                                                    </button>
+                                                </li>
+                                            </>
+                                        )}
+                                    </ul>
+                                </nav>
+
+                                {/* Prev / Next right side */}
+                                <div>
+                                    <button
+                                        className="btn btn-outline-primary me-2"
+                                        disabled={pageNumber === 1}
+                                        onClick={() => handlePageChange(pageNumber - 1)}
+                                    >
+                                        Previous
+                                    </button>
+                                    <button
+                                        className="btn btn-outline-primary"
+                                        disabled={pageNumber === totalPages}
+                                        onClick={() => handlePageChange(pageNumber + 1)}
+                                    >
+                                        Next
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                    )}
+                        )}
                     </div>
                 </div>
             </div>
