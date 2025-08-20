@@ -32,6 +32,7 @@ import AddCustomer from './pages/sales/customer/Addcustomer'
 import ListCustomer from './pages/sales/customer/Listcustomer'
 import AddSales from './pages/sales/salesinfo/AddSales'
 import ListSales from './pages/sales/salesinfo/ListSales'
+import Stock from './pages/stock/Stock'
 
 
 const MyContext = createContext();
@@ -104,6 +105,8 @@ function App() {
                   element={<ProtectedRoute><AddSales /></ProtectedRoute>} />
                 <Route path='/sales/list'
                   element={<ProtectedRoute><ListSales /></ProtectedRoute>} />
+                <Route path='/stock'
+                  element={<ProtectedRoute><Stock /></ProtectedRoute>} />
                 <Route path='/logout'
                   element={<ProtectedRoute><Logout /></ProtectedRoute>} />
               </Routes>

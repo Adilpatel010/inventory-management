@@ -201,8 +201,8 @@ const Sidebar = () => {
                                     </ul>
                                 </ul>
 
-                                <NavLink to="/organization">
-                                    <li><HiOutlineBuildingOffice2 className='sidebar-icon' />Organization</li></NavLink>
+                                <NavLink to="/stock">
+                                    <li><HiOutlineBuildingOffice2 className='sidebar-icon' />Stock</li></NavLink>
                                 <NavLink to="/logout">
                                     <li><TbLogout className='sidebar-icon' />Logout</li></NavLink>
                             </ul>

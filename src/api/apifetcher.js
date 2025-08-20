@@ -314,6 +314,11 @@ export const updateCustomerData = (id, data) => {
     return api.put(`/customer/${id}`, data)
 }
 
+// get stock 
+export const getStock = (id, pageNumber, pageSize) => {
+    return api.get(`/productStock/${id}?pageNumber=${pageNumber}&pageSize=${pageSize}`)
+}
+
 // ----------------->> Sales/Sales order all api <<--------------
 
 // get sales order

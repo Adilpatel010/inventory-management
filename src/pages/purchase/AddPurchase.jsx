@@ -227,8 +227,6 @@
 // export default AddPurchase
 
 
-
-
 import React, { useEffect, useState } from 'react'
 import { useLocation, NavLink, useNavigate } from 'react-router'
 import { addPurchaseData, updatePurchaseData } from '../../api/apifetcher'

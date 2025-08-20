@@ -199,7 +199,7 @@
 
 import React, { useEffect, useState } from 'react'
 import { deleteProductData, getProductData, getProductId, searchProductData, updateProductStatus } from '../../api/apifetcher'
-import { NavLink, useNavigate } from 'react-router'
+import { NavLink, useNavigate} from 'react-router'
 
 const ListProduct = () => {
     const [data, setData] = useState([])
@@ -212,7 +212,6 @@ const ListProduct = () => {
     const [pageNumber, setPageNumber] = useState(1)
     const [pageSize, setPageSize] = useState(10)
     const [totalPages, setTotalPages] = useState(1)
-
 
     // list product 
     const ListProduct = async (page = 1, size = pageSize) => {
@@ -282,10 +281,10 @@ const ListProduct = () => {
             if (!res.data || res.data.length === 0) {
                 setNoData(true)
                 setData([])
-                setTotalPages(1)   
+                setTotalPages(1)
             } else {
                 setData(res.data)
-                setPageNumber(1) 
+                setPageNumber(1)
             }
         } catch (err) {
             console.error("Search Error:", err)
@@ -372,6 +371,7 @@ const ListProduct = () => {
                                             <th>Product Code</th>
                                             <th>Product Image</th>
                                             <th>Stock </th>
+                                            <th>Price</th>
                                             <th>Description </th>
                                             <th>Status</th>
                                             <th>Action</th>
@@ -389,6 +389,7 @@ const ListProduct = () => {
                                                 <td>{product.productCode}</td>
                                                 <td>{product.productImage}</td>
                                                 <td>{product.stock}</td>
+                                                <td>{product.price}</td>
                                                 <td>{product.description}</td>
                                                 <td>
                                                     <div className="form-check form-switch">
