@@ -159,7 +159,7 @@ const Dashboard = () => {
       </div>
 
       <div className='row mt-4'>
-        <div className="col-md-8">
+        <div className="col-md-8 col-sm-10">
           <Chart
             chartType="ColumnChart"
             width="100%"
@@ -168,7 +168,7 @@ const Dashboard = () => {
             options={optionss}
           />
         </div>
-        <div className="col-md-4">
+        <div className="col-md-4 col-sm-4">
           <Chart
             chartType="PieChart"
             width="100%"

@@ -83,7 +83,7 @@ const AddWarehouse = () => {
   return (
     <div className="container-fluid pb-5" style={{ backgroundColor: '#f1f1f1' }}>
       <div className="row justify-content-center">
-        <div className="col-lg-11 mt-5 p-4 bg-white rounded" id="form">
+        <div className="col-lg-11 col-11 mt-5 p-4 bg-white rounded" id="form">
           <form onSubmit={handleSubmit}>
             <div className="row">
               <div className="col-md-6 col-12">
@@ -154,10 +154,17 @@ const AddWarehouse = () => {
               {errors.description && <small className="text-danger">{errors.description}</small>}
             </div>
 
-            <button className="btn-form mt-4">
-              {updateData ? 'Update Warehouse' : 'Add Warehouse'}
-            </button>
-            <NavLink to="/warehouse/list"> <button className='btn-form mx-5'>List Warehouse</button></NavLink>
+            <div className="d-flex gap-2 mt-5">
+              <button className="btn-form">
+                {updateData ? 'Update Warehouse' : 'Add Warehouse'}
+              </button>
+
+              <NavLink to="/warehouse/list">
+                <button className="btn-form w-100">
+                  List Warehouse
+                </button>
+              </NavLink>
+            </div>
           </form>
         </div>
       </div>

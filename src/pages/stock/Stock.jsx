@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { getStock } from '../../api/apifetcher'
-import { NavLink, useNavigate ,useLocation} from 'react-router'
+import { NavLink, useNavigate, useLocation } from 'react-router'
 
 const Stock = () => {
 
@@ -40,12 +40,14 @@ const Stock = () => {
     useEffect(() => {
         listStock(pageNumber)
     }, [])
+
     // data navigate
     useEffect(() => {
         if (state) {
             setData({ ...state });
         }
     }, [state]);
+
     // Handle page click
     const handlePageChange = (newPage) => {
         if (newPage < 1 || newPage > totalPages) return;

@@ -198,8 +198,8 @@
 
 
 import React, { useEffect, useState } from 'react'
-import { deleteProductData, getProductData, getProductId, searchProductData, updateProductStatus } from '../../api/apifetcher'
-import { NavLink, useNavigate} from 'react-router'
+import { deleteProductData, getProductData, getProductId, getStock, searchProductData, updateProductStatus } from '../../api/apifetcher'
+import { NavLink, useNavigate } from 'react-router'
 
 const ListProduct = () => {
     const [data, setData] = useState([])
@@ -306,6 +306,18 @@ const ListProduct = () => {
         }
     }
 
+    // handle stock
+    const handleStock = async (id) => {
+        try {
+            const res = await getStock(id)
+            setId(res.data)
+            Navigate("/stock", { state: res.data })
+            console.log(res.data)
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
     // Handle page click
     const handlePageChange = (newPage) => {
         if (newPage < 1 || newPage > totalPages) return;
@@ -388,7 +400,7 @@ const ListProduct = () => {
                                                 <td>{product.productName}</td>
                                                 <td>{product.productCode}</td>
                                                 <td>{product.productImage}</td>
-                                                <td>{product.stock}</td>
+                                                <button><td onClick={() => handleStock(product.productId)}>{product.stock}</td></button>
                                                 <td>{product.price}</td>
                                                 <td>{product.description}</td>
                                                 <td>

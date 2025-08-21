@@ -352,4 +352,3 @@ const ListWarehouse = () => {
 }
 
 export default ListWarehouse
-

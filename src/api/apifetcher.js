@@ -3,7 +3,7 @@ import axios from "axios";
 // localStorage.setItem("token", "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4NTExNjczNDYxIiwiaWF0IjoxNzUzODY4MTg4LCJleHAiOjE3NTM4NzE3ODh9.LQ6fp91IJfuIPRXmN3dbbbVfPW_lqAhA6HrcGg07MEc");
 
 const api = axios.create({
-    baseURL: "http://192.168.0.167:8080/api/v1",
+    baseURL: "http://192.168.31.212:8080/api/v1",
 })
 
 // Add JWT token to every request

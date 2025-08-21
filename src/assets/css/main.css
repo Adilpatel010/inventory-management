@@ -61,6 +61,16 @@ body {
     color: #007bff;
 }
 
+@media only screen and (max-width:500px) {
+    .headingname {
+        margin-left: -140px;
+    }
+
+    .header-icon {
+        margin-left: 10px;
+    }
+}
+
 #search {
     margin-right: 30%;
 }

@@ -78,7 +78,7 @@ const AddCategory = () => {
     return (
         <div className="container-fluid pb-5">
             <div className="row justify-content-center mt-2">
-                <div className="col-lg-11 mt-4 p-4 bg-white rounded" id="form">
+                <div className="col-lg-11 col-11 mt-4 p-4 bg-white rounded" id="form">
                     <form onSubmit={handleSubmit}>
                         <div className="row">
                             <div className="col-md-6 col-12">
@@ -133,12 +133,14 @@ const AddCategory = () => {
                                 />
                                 {errors.description && <small className="text-danger">{errors.description}</small>}
                             </div>
-
                         </div>
-                        <button className="btn-form mt-4">
-                            {updateData ? 'Update Category' : 'Add Category'}
-                        </button>
-                        <NavLink to="/category/list"> <button className='btn-form mx-5'>List Category</button></NavLink>
+
+                        <div className="d-flex gap-3 mt-5">
+                            <button className="btn-form">
+                                {updateData ? 'Update Category' : 'Add Category'}
+                            </button>
+                            <NavLink to="/category/list"> <button className='btn-form w-100'>List Category</button></NavLink>
+                        </div>
                     </form>
                 </div>
             </div>
