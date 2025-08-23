@@ -100,16 +100,27 @@ const AddProduct = () => {
             return;
         }
 
+        const payload = {
+            ...formData,
+            stocks: formData.warehouses?.map((wh) => ({
+                wareHouseId: wh.wareHouseId,
+                quantity: wh.quantity,
+            })) || [],
+        };
+
+        console.log("Final Payload Sent:", payload);
+
         try {
             if (updateData) {
-                await updateProductData(formData.productId, formData);
+                await updateProductData(formData.productId, payload);
                 alert("Data updated successfully");
                 navigate("/product/list");
             } else {
-                await addProductData(formData);
+                await addProductData(payload);
                 alert("Data added successfully");
                 navigate("/product/list");
             }
+
             // reset form
             setFormData({
                 referenceProductId: null,
@@ -139,7 +150,10 @@ const AddProduct = () => {
             setUpdateData(true);
             setFormData({
                 ...state,
-                warehouses: state.warehouses && state.warehouses.length > 0 ? state.warehouses : [{ wareHouseId: "", quantity: "" }],
+                warehouses:
+                    state.warehouses && state.warehouses.length > 0
+                        ? state.warehouses
+                        : [{ wareHouseId: "", quantity: "" }],
             });
         }
     }, [state]);
@@ -174,7 +188,9 @@ const AddProduct = () => {
                                         onChange={handleChange}
                                         placeholder="Organization ID"
                                     />
-                                    {errors.organizationId && <small className="text-danger">{errors.organizationId}</small>}
+                                    {errors.organizationId && (
+                                        <small className="text-danger">{errors.organizationId}</small>
+                                    )}
                                 </div>
 
                                 <div className="col-md-6 mt-3">
@@ -187,7 +203,9 @@ const AddProduct = () => {
                                         onChange={handleChange}
                                         placeholder="Category ID"
                                     />
-                                    {errors.categoryId && <small className="text-danger">{errors.categoryId}</small>}
+                                    {errors.categoryId && (
+                                        <small className="text-danger">{errors.categoryId}</small>
+                                    )}
                                 </div>
 
                                 <div className="col-md-6 mt-3">
@@ -200,7 +218,9 @@ const AddProduct = () => {
                                         onChange={handleChange}
                                         placeholder="Supplier ID"
                                     />
-                                    {errors.supplierId && <small className="text-danger">{errors.supplierId}</small>}
+                                    {errors.supplierId && (
+                                        <small className="text-danger">{errors.supplierId}</small>
+                                    )}
                                 </div>
 
                                 <div className="col-md-6 mt-3">
@@ -213,7 +233,9 @@ const AddProduct = () => {
                                         onChange={handleChange}
                                         placeholder="Product Name"
                                     />
-                                    {errors.productName && <small className="text-danger">{errors.productName}</small>}
+                                    {errors.productName && (
+                                        <small className="text-danger">{errors.productName}</small>
+                                    )}
                                 </div>
 
                                 <div className="col-md-6 mt-3">
@@ -226,7 +248,9 @@ const AddProduct = () => {
                                         onChange={handleChange}
                                         placeholder="Product Code"
                                     />
-                                    {errors.productCode && <small className="text-danger">{errors.productCode}</small>}
+                                    {errors.productCode && (
+                                        <small className="text-danger">{errors.productCode}</small>
+                                    )}
                                 </div>
 
                                 <div className="col-md-6 mt-3">
@@ -239,7 +263,9 @@ const AddProduct = () => {
                                         onChange={handleChange}
                                         placeholder="Product Image"
                                     />
-                                    {errors.productImage && <small className="text-danger">{errors.productImage}</small>}
+                                    {errors.productImage && (
+                                        <small className="text-danger">{errors.productImage}</small>
+                                    )}
                                 </div>
 
                                 <div className="col-md-6 mt-3">
@@ -252,7 +278,9 @@ const AddProduct = () => {
                                         onChange={handleChange}
                                         placeholder="Description"
                                     />
-                                    {errors.description && <small className="text-danger">{errors.description}</small>}
+                                    {errors.description && (
+                                        <small className="text-danger">{errors.description}</small>
+                                    )}
                                 </div>
 
                                 <div className="col-md-6 mt-3">
@@ -265,7 +293,9 @@ const AddProduct = () => {
                                         onChange={handleChange}
                                         placeholder="Stock"
                                     />
-                                    {errors.stock && <small className="text-danger">{errors.stock}</small>}
+                                    {errors.stock && (
+                                        <small className="text-danger">{errors.stock}</small>
+                                    )}
                                 </div>
 
                                 <div className="col-md-6 mt-3">
@@ -279,6 +309,7 @@ const AddProduct = () => {
                                         placeholder="Low Stock"
                                     />
                                 </div>
+
                                 <div className="col-md-6 mt-3">
                                     <label className="form-label">Price</label>
                                     <input
@@ -289,7 +320,9 @@ const AddProduct = () => {
                                         onChange={handleChange}
                                         placeholder="Price"
                                     />
-                                    {errors.price && <small className="text-danger">{errors.price}</small>}
+                                    {errors.price && (
+                                        <small className="text-danger">{errors.price}</small>
+                                    )}
                                 </div>
 
                                 {/* dynamic warehouse fields */}
@@ -307,7 +340,9 @@ const AddProduct = () => {
                                                 placeholder="Warehouse ID"
                                             />
                                             {errors[`wareHouseId_${index}`] && (
-                                                <small className="text-danger">{errors[`wareHouseId_${index}`]}</small>
+                                                <small className="text-danger">
+                                                    {errors[`wareHouseId_${index}`]}
+                                                </small>
                                             )}
                                         </div>
 
@@ -322,14 +357,19 @@ const AddProduct = () => {
                                                 placeholder="Quantity"
                                             />
                                             {errors[`quantity_${index}`] && (
-                                                <small className="text-danger">{errors[`quantity_${index}`]}</small>
+                                                <small className="text-danger">
+                                                    {errors[`quantity_${index}`]}
+                                                </small>
                                             )}
                                         </div>
 
                                         {/* plus icon on last row only */}
                                         {index === formData.warehouses.length - 1 && (
                                             <div className="col-md-2 mt-5">
-                                                <IoMdAdd onClick={handleAddWarehouse} className="add-icon" />
+                                                <IoMdAdd
+                                                    onClick={handleAddWarehouse}
+                                                    className="add-icon"
+                                                />
                                             </div>
                                         )}
                                     </div>

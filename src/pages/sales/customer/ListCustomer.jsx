@@ -43,7 +43,6 @@ const ListCustomer = () => {
 
     // change status
     const changeStatus = async (id, status) => {
-        console.log(id, status)
         try {
             const res = await updateCustomerStatus(id, status)
             listCustomer(pageNumber)
@@ -79,6 +78,7 @@ const ListCustomer = () => {
             console.log(err)
         }
     }
+    
     // search customer
     const handleSearch = async (e) => {
         const value = e.target.value

@@ -8,6 +8,7 @@ import './assets/css/product.css'
 import './assets/css/user.css'
 import './assets/css/customer.css'
 import './assets/css/adminlogin.css'
+import './assets/css/stock.css'
 import Header from './components/Header'
 import Sidebar from './components/Sidebar'
 import Dashboard from './pages/dashboard/Dashboard'
@@ -32,7 +33,7 @@ import AddCustomer from './pages/sales/customer/Addcustomer'
 import ListCustomer from './pages/sales/customer/Listcustomer'
 import AddSales from './pages/sales/salesinfo/AddSales'
 import ListSales from './pages/sales/salesinfo/ListSales'
-import Stock from './pages/stock/Stock'
+import ListStock from './pages/stock/ListStock'
 
 
 const MyContext = createContext();
@@ -105,8 +106,8 @@ function App() {
                   element={<ProtectedRoute><AddSales /></ProtectedRoute>} />
                 <Route path='/sales/list'
                   element={<ProtectedRoute><ListSales /></ProtectedRoute>} />
-                <Route path='/stock'
-                  element={<ProtectedRoute><Stock /></ProtectedRoute>} />
+                <Route path='/stock/:id'
+                  element={<ProtectedRoute><ListStock/></ProtectedRoute>} />
                 <Route path='/logout'
                   element={<ProtectedRoute><Logout /></ProtectedRoute>} />
               </Routes>

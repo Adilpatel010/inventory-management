@@ -314,11 +314,32 @@ export const updateCustomerData = (id, data) => {
     return api.put(`/customer/${id}`, data)
 }
 
-// get stock 
-export const getStock = (id, pageNumber, pageSize) => {
-    return api.get(`/productStock/${id}?pageNumber=${pageNumber}&pageSize=${pageSize}`)
+// ----------------->> Stock all api <<--------------
+
+// get stock for product
+export const getStock = (productId, pageNumber = 1, pageSize = 10) => {
+    return api.get(`/productStock/${productId}?pageNumber=${pageNumber}&pageSize=${pageSize}`);
+};
+
+// change status 
+export const updateStockStatus = (id, status) => {
+    return api.patch(`/productStock/${id}/${status == "ACTIVE" ? "INACTIVE" : "ACTIVE"}`)
 }
 
+// search stock data 
+export const searchStockData = (search) => {
+    return api.get(`/productStock/search?search=${search}`)
+}
+
+// update stock
+export const updateStockData = (id, data) => {
+    return api.put(`/productStock/${id}`, data)
+}
+
+// get stock by id
+export const getStockId = (id) => {
+    return api.get(`/productStock/Stocks/${id}`)
+}
 // ----------------->> Sales/Sales order all api <<--------------
 
 // get sales order

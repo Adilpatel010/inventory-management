@@ -40,28 +40,28 @@
     margin: 0 6px;
 }
 
-#category-search {
+#stock-search {
     margin-left: 17%;
 }
 
-#category-search-icon {
+#stock-search-icon {
     position: absolute;
     top: 40%;
     left: 58%;
     color: gray;
 }
 
-.btn-category {
+.btn-stock {
     color: white;
     background-color: rgba(9, 122, 242, 0.916);
     border: 0;
     border-radius: 5px;
     padding: 5px 10px;
-    margin-left: 12.7rem;
+    margin-left: 11.6rem;
     transition: 0.3s ease-in-out;
 }
 
-.btn-category:hover {
+.btn-stock:hover {
     color: white;
     background-color: rgba(1, 100, 207, 0.943);
     border: 0;
