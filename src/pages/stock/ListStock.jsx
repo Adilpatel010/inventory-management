@@ -247,7 +247,7 @@
 // export default Stock
 
 import React, { useEffect, useState } from "react"
-import { useParams, NavLink } from "react-router"
+import { useParams, NavLink, useNavigate } from "react-router"
 import { getStock, getStockId, searchStockData, updateStockStatus } from "../../api/apifetcher"
 
 const ListStock = () => {
@@ -258,6 +258,7 @@ const ListStock = () => {
     const [error, setError] = useState("")
     const [search, setSearch] = useState("")
     const [noData, setNoData] = useState(false)
+    const navigate = useNavigate()
     const [pageNumber, setPageNumber] = useState(1)
     const [pageSize, setPageSize] = useState(10)
     const [totalPages, setTotalPages] = useState(1)
@@ -334,8 +335,11 @@ const ListStock = () => {
         try {
             const res = await getStockId(id)
             setIdStock(res.data)
+            console.log(res.data)
+            navigate("/stock/update", { state: res.data })
         } catch (err) {
             console.log(err)
+            setError("Unable to fetch category details.")
         }
     }
 
